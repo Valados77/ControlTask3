@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataContracts
 {
-    internal class BaseEntity
+    internal abstract class BaseEntity
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Comment { get; set; }
+
+        
     }
 }
