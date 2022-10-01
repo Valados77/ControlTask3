@@ -3,18 +3,17 @@ namespace DataContracts
 {
     public class Project : BaseEntity
     {
-        public Project() : this("unknown")
-            {
-                Id = string.Format("{0:d4}P", Count++); //P-project
-                CreationDateTime = DateTime.Now;
-            }
-
         public Project(string name)
-            : this(name, DateTime.Now) { }
+            : this(name, DateTime.Now)
+        {
+            Id = string.Format("{0:d4}P", Count++); //P-project
+            Name = name;
+            CreationDateTime = DateTime.Now;
+        }
 
         public Project(string name,
-                DateTime expirationDate)
-                : this(name, expirationDate, 0) { }
+            DateTime expirationDate)
+            : this(name, expirationDate, 0) { }
 
         public Project(string name,
             DateTime expirationDate,
@@ -26,7 +25,6 @@ namespace DataContracts
             int maxHours,
             string leaderUserId)
         {
-            Name = name;
             ExpirationDate = expirationDate;
             MaxHours = maxHours;
             LeaderUserId = leaderUserId;
@@ -44,12 +42,12 @@ namespace DataContracts
 
         public override void Print()
         {
-            Console.WriteLine($"ID: {Id}" +
-                              $"Name: {Name}" +
-                              $"Creation: {CreationDateTime}" +
-                              $"Expiration: {ExpirationDate}" +
-                              $"MaxHours: {MaxHours}" +
-                              $"LeaderUserId {LeaderUserId}");
+            Console.WriteLine($"ID: {Id} \n" +
+                              $"Name: {Name} \n" +
+                              $"Expiration: {ExpirationDate} \n" +
+                              $"Max hours: {MaxHours} \n" +
+                              $"Leader userId {LeaderUserId} \n" +
+                              "Created \n");
         }
     }
 }

@@ -4,9 +4,9 @@ using DataContracts;
 
 class Program
 {
-    public static Dictionary<string, User> userDictionary = new Dictionary<string, User>();
-    public static Dictionary<string, Project> projectDictionary = new Dictionary<string, Project>();
-    public static User loginingUser = new User();
+    public static Dictionary<string, User> UserDictionary = new Dictionary<string, User>();
+    public static Dictionary<string, Project> ProjectDictionary = new Dictionary<string, Project>();
+    public static User LoginingUser = new User("test", "12345", Enums.AccessRoles.Admin);
 
     static void Main(string[] args)
     {
@@ -15,18 +15,18 @@ class Program
         Console.WriteLine("Enter \"reg\" to register new user");
         while (Console.ReadLine() == "reg")
         {
-            User user = InteractionUser.Regestration();
-            userDictionary.Add(user.Id, user);
+            User user = UserInteraction.Registration();
+            UserDictionary.Add(user.Id, user);
             Console.WriteLine("end");
-            Console.WriteLine("Enter \"reg\" to register new user")
+            Console.WriteLine("Enter \"reg\" to register new user");
         }
 
-        foreach (var i in userDictionary)
+        foreach (var i in UserDictionary)
         {
             i.Value.Print();
         }
 
-        User loginingUser = InteractionUser.Logining(userDictionary);
+        User loginingUser = UserInteraction.Logining(UserDictionary);
         //---------------------------------------
     }
 }

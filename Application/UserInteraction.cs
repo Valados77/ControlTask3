@@ -2,7 +2,7 @@
 
 namespace Application;
 
-public class InteractionUser
+public class UserInteraction
 {
     public static void Menu()
     {
@@ -19,11 +19,11 @@ public class InteractionUser
             switch (Console.ReadLine())
             {
                 case "1":
-                    User user = Regestration();
-                    Program.userDictionary.Add(user.Id, user);
+                    User user = Registration();
+                    Program.UserDictionary.Add(user.Id, user);
                     break;
                 case "2":
-                    Program.loginingUser = Logining(Program.userDictionary);
+                    Program.LoginingUser = Logining(Program.UserDictionary);
                     break;
 
             }
@@ -32,43 +32,44 @@ public class InteractionUser
     }
 
 
-    public static User Regestration()
+    public static User Registration()
     {
         //TEST IMPLEMENTATION
         //---------------------------------------
-        User addUser = new User();
         Console.Write("Enter username: ");
-        addUser.Username = Console.ReadLine();
-
+        string username = Console.ReadLine();
         Console.Write("Enter password: ");
-        addUser.Password = Console.ReadLine();
-
-        Console.Write("Enter full name: ");
-        addUser.FullName = Console.ReadLine();
+        string password = Console.ReadLine();
 
         Console.Write("Enter access role:\n" +
                       "0. Admin\n" +
                       "1. Leader\n" +
                       "2. Employee");
+        Enums.AccessRoles role = new Enums.AccessRoles();
         switch (Console.ReadLine())
         {
             case "0":
                 Console.WriteLine("Role selected: Admin");
-                addUser.AccessRole = AccessRoles.Admin;
+                role = Enums.AccessRoles.Admin;
                 break;
             case "1":
                 Console.WriteLine("Role selected: Leader");
-                addUser.AccessRole = AccessRoles.Leader;
+                role = Enums.AccessRoles.Leader;
                 break;
             case "2":
                 Console.WriteLine("Role selected: Employee");
-                addUser.AccessRole = AccessRoles.Employee;
+                role = Enums.AccessRoles.Employee;
                 break;
             default:
                 Console.WriteLine("Incorrectly selected value! Default role selected: Employee");
-                addUser.AccessRole = AccessRoles.Employee;
+                role = Enums.AccessRoles.Employee;
                 break;
         }
+
+        User addUser = new User(username, password, role);
+        
+        Console.Write("Enter full name: ");
+        addUser.FullName = Console.ReadLine();
         return addUser;
         //---------------------------------------
     }
@@ -77,7 +78,6 @@ public class InteractionUser
     {
         //TEST IMPLEMENTATION
         //---------------------------------------
-        User TestDELETE = new User();
         Console.WriteLine("enter username: ");
         string name = Console.ReadLine();
         foreach (var i in dataUsers)
@@ -94,16 +94,17 @@ public class InteractionUser
 
             }
         }
-        return TestDELETE;
+        return new User("test", "test", Enums.AccessRoles.Employee); ;
         //---------------------------------------
     }
 
     public static Project NewProject()
     {
-
+        //TEST IMPLEMENTATION
+        //---------------------------------------
+        return new Project("test");
+        //---------------------------------------
     }
-
-
-    }
+}
 
     
