@@ -1,5 +1,4 @@
-﻿
-namespace DataContracts
+﻿namespace DataContracts
 {
     public class Enums
     {

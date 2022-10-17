@@ -1,8 +1,17 @@
-﻿
-namespace DataContracts
+﻿namespace DataContracts
 {
     public class Project : BaseEntity
     {
+        public static int Count = 1;
+
+        public DateTime ViewingDateTime { get; set; }
+        public DateTime CreationDateTime { get; set; }
+        public string Name { get; set; }
+        public DateTime ExpirationDate { get; set; }
+        public int MaxHours { get; set; }
+        public int MaxHoursPerMonth { get; set; }
+        public string LeaderUserId { get; set; }
+
         public Project(string name)
             : this(name, DateTime.Now)
         {
@@ -29,16 +38,6 @@ namespace DataContracts
             MaxHours = maxHours;
             LeaderUserId = leaderUserId;
         }
-
-        public static int Count = 1;
-
-        public DateTime ViewingDateTime { get; set; }
-        public DateTime CreationDateTime { get; set; }
-        public string Name { get; set; }
-        public DateTime ExpirationDate { get; set; }
-        public int MaxHours { get; set; }
-        public int MaxHoursPerMonth { get; set; }
-        public string LeaderUserId { get; set; }
 
         public override void Print()
         {

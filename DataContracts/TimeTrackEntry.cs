@@ -1,7 +1,7 @@
 ﻿
 namespace DataContracts
 {
-    internal class TimeTrackEntry : BaseEntity
+    public class TimeTrackEntry : BaseEntity
     {
         public TimeTrackEntry(string userId, 
             string projectId, 
