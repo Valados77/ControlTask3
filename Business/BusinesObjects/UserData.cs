@@ -1,25 +1,26 @@
 ﻿using DataContracts;
 
-namespace Business
+namespace Business.BusinesObjects
 {
     public class UserData
     {
-        public delegate void IsActiveChanged(string msg);
-        public event IsActiveChanged? Notify;
+        public delegate void IsActiveChangedHandler(string msg);
+        public event IsActiveChangedHandler? IsActiveChanged;
         public User User { get; private set; }
         public List<TimeTrackEntry> SubmittedTime { get; private set; }
-        public int sumOfSubmittedTime = 0;
+        public int SumOfSubmittedTime { get; private set; }
 
         public UserData(User user)
         {
             User = user;
+            SumOfSubmittedTime = 0;
         }
 
         public void AddTimeTrackEntry(TimeTrackEntry newTimeTrackEntry)
         {
             SubmittedTime.Add(newTimeTrackEntry);
-            sumOfSubmittedTime += newTimeTrackEntry.Value;
-            Notify?.Invoke($"Add new TimeTrackEntry for the {User.Username}");
+            SumOfSubmittedTime += newTimeTrackEntry.Value;
+            IsActiveChanged?.Invoke($"Add new TimeTrackEntry for the {User.Username}");
         }
     }
 }

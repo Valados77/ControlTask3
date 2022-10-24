@@ -1,4 +1,6 @@
-﻿namespace Business
+﻿using Business.BusinesObjects;
+
+namespace Business
 {
     internal class DataLists
     {

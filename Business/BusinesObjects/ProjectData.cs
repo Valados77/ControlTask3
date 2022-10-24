@@ -1,11 +1,11 @@
 ﻿using DataContracts;
 
-namespace Business
+namespace Business.BusinesObjects
 {
-    internal class ProjectData
+    public class ProjectData
     {
-        public delegate void IsActiveChanged(string msg);
-        public event IsActiveChanged? Notify;
+        public delegate void IsActiveChangedHandler(string msg);
+        public event IsActiveChangedHandler? IsActiveChanged;
         public Project Project { get; private set; }
         public List<User> EmployeesList { get; private set; }
 
@@ -17,7 +17,7 @@ namespace Business
         public void AddEmploy(User newEmploy)
         {
             EmployeesList.Add(newEmploy);
-            Notify?.Invoke($"Add new employ for the {Project.Name}");
+            IsActiveChanged?.Invoke($"Add new employ for the {Project.Name}");
         }
     }
 }

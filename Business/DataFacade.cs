@@ -1,65 +1,37 @@
-﻿using DataContracts;
+﻿using Business.BusinesObjects;
+using Business.BusinesServices;
+using DataContracts;
 
 namespace Business
 {
     public class DataFacade
     {
-        private UserServices userServices;
-        private ProjectServices projectServices;
-        private DataLists dataLists;
+        private UserService userService;
+        private ProjectService projectService;
+        private DataLists dataList;
         
 
         public DataFacade()
         {
-            userServices = new UserServices();
-            projectServices = new ProjectServices();
-            dataLists = new DataLists();
+            userService = new UserService();
+            projectService = new ProjectService();
+            dataList = new DataLists();
         }
 
-        public void RegistrationNewUser()
+        public List<UserData> PrintAllActiveUser()
         {
-            User user = UserInteraction.Registration();
-            DataDictionaries.UserDictionary.Add(user.Id, user);
-            UserData userData = new UserData(user);
-            userData.Notify += DisplayMessage;
-            dataLists.userDataList.Add(userData);
+            List<UserData> activeUsers = userService.GetAllActiveUser(dataList.userDataList);
+            return activeUsers;
         }
 
-        public UserData LoginingUserData()
-        {
-            Console.WriteLine("enter username: ");
-            string name = Console.ReadLine();
-            foreach (var i in dataLists.userDataList)
-            {
-                if (i.User.Username == name)
-                {
-                    Console.Write("Enter password: ");
-                    string password = Console.ReadLine();
-                    if (i.User.Password == password)
-                    {
-                        Console.WriteLine("OK");
-                        return i;
-                    }
-
-                }
-            }
-            return new UserData(new User("test", "test", Enums.AccessRoles.Employee));
-        }
-        
-        public void PrintAllActiveUser()
-        {
-            List<UserData> activeUsers = userServices.GetAllActiveUser(dataLists.userDataList);
-            userServices.Print(activeUsers);
-        }
-
-        public void PrintAllLeader()
+        public List<UserData> PrintAllLeader()
         {
             List<UserData> leaderUsers = 
-                userServices.GetAllLeader(dataLists.userDataList);
-            userServices.Print(leaderUsers);
+                userService.GetAllLeader(dataList.userDataList);
+            return leaderUsers;
         }
 
-        public void PrintAllActiveUsersFromSomeTime()
+        public List<UserData> PrintAllActiveUsersFromSomeTime()
         {
             Console.Write("Enter the minimum working time: ");
             int minTime;
@@ -72,18 +44,18 @@ namespace Business
                 Console.Write("An exception was thrown: ");
                 minTime = 0;
             }
-            List<UserData> leaderUsers = userServices.GetAllActiveUsersFromSomeTime(dataLists.userDataList, minTime);
-            userServices.Print(leaderUsers);
+            List<UserData> leaderUsers = userService.GetAllActiveUsersFromSomeTime(dataList.userDataList, minTime);
+            return leaderUsers;
         }
 
-        public void PrintExpiredProjects()
+        public List<ProjectData> PrintExpiredProjects()
         {
             List<ProjectData> expiredProjects = 
-                projectServices.GetAllExpiredProjects(dataLists.projectDataList);
-            projectServices.Print(expiredProjects);
+                projectService.GetAllExpiredProjects(dataList.projectDataList);
+            return expiredProjects;
         }
 
-        public void PrintAllProjectsWihMoreEmployees()
+        public List<ProjectData> PrintAllProjectsWihMoreEmployees()
         {
             int minEmploys;
             try
@@ -96,10 +68,8 @@ namespace Business
                 minEmploys = 0;
             }
             List<ProjectData> Projects =
-                projectServices.GetAllProjectsWihMoreEmployees(dataLists.projectDataList, minEmploys);
-            projectServices.Print(Projects);
+                projectService.GetAllProjectsWihMoreEmployees(dataList.projectDataList, minEmploys);
+            return Projects;
         }
-
-        void DisplayMessage(string message) => Console.WriteLine(message);
     }
 }

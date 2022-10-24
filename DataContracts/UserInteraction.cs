@@ -15,7 +15,7 @@ namespace DataContracts
             Console.Write("Enter access role:\n" +
                           "0. Admin\n" +
                           "1. Leader\n" +
-                          "2. Employee");
+                          "2. User");
             Enums.AccessRoles role = new Enums.AccessRoles();
             switch (Console.ReadLine())
             {
@@ -28,12 +28,12 @@ namespace DataContracts
                     role = Enums.AccessRoles.Leader;
                     break;
                 case "2":
-                    Console.WriteLine("Role selected: Employee");
-                    role = Enums.AccessRoles.Employee;
+                    Console.WriteLine("Role selected: User");
+                    role = Enums.AccessRoles.User;
                     break;
                 default:
-                    Console.WriteLine("Incorrectly selected value! Default role selected: Employee");
-                    role = Enums.AccessRoles.Employee;
+                    Console.WriteLine("Incorrectly selected value! Default role selected: User");
+                    role = Enums.AccessRoles.User;
                     break;
             }
 
@@ -65,7 +65,7 @@ namespace DataContracts
 
                 }
             }
-            return new User("test", "test", Enums.AccessRoles.Employee);
+            return new User("test", "test", Enums.AccessRoles.User);
             //---------------------------------------
         }
     }
