@@ -1,6 +1,8 @@
 ﻿using Business.BusinesObjects;
 using Business.BusinesServices;
 using DataContracts;
+using DataContracts.DataInteractions;
+using DataContracts.DataObjects;
 
 namespace Business
 {
@@ -18,20 +20,38 @@ namespace Business
             dataList = new DataLists();
         }
 
-        public List<UserData> PrintAllActiveUser()
+        public bool AddNewUserData(string userName, string password, Enums.AccessRoles role)
+        {
+            User user = UserInteraction.AddNewUser(userName, password, role);
+            UserData userData = new UserData(user);
+            userData.IsActiveChanged += DisplayMessage;
+            dataList.userDataList.Add(userData);
+            return true;
+        }
+
+        public bool AddNewProjectData(string projectName)
+        {
+            Project project = ProjectInteraction.AddNewProject(projectName);
+            ProjectData projectData = new ProjectData(project);
+            projectData.IsActiveChanged += DisplayMessage;
+            dataList.projectDataList.Add(projectData);
+            return true;
+        }
+
+        public List<UserData> ReturnAllActiveUser()
         {
             List<UserData> activeUsers = userService.GetAllActiveUser(dataList.userDataList);
             return activeUsers;
         }
 
-        public List<UserData> PrintAllLeader()
+        public List<UserData> ReturnAllLeader()
         {
             List<UserData> leaderUsers = 
                 userService.GetAllLeader(dataList.userDataList);
             return leaderUsers;
         }
 
-        public List<UserData> PrintAllActiveUsersFromSomeTime()
+        public List<UserData> ReturnAllActiveUsersFromSomeTime()
         {
             Console.Write("Enter the minimum working time: ");
             int minTime;
@@ -48,14 +68,37 @@ namespace Business
             return leaderUsers;
         }
 
-        public List<ProjectData> PrintExpiredProjects()
+        public UserData? ReturnUserData(string userName)
+        {
+            foreach (var i in dataList.userDataList)
+            {
+                if (i.User.Username == userName)
+                {
+                    return i;
+                }
+            }
+
+            return null;
+        }
+
+        public bool PasswordVerification(UserData userData, string password)
+        {
+            if (userData.User.Password == password)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public List<ProjectData> ReturnAllExpiredProjects()
         {
             List<ProjectData> expiredProjects = 
                 projectService.GetAllExpiredProjects(dataList.projectDataList);
             return expiredProjects;
         }
 
-        public List<ProjectData> PrintAllProjectsWihMoreEmployees()
+        public List<ProjectData> ReturnAllProjectsWihMoreEmployees()
         {
             int minEmploys;
             try
@@ -71,5 +114,11 @@ namespace Business
                 projectService.GetAllProjectsWihMoreEmployees(dataList.projectDataList, minEmploys);
             return Projects;
         }
+
+        private static string DisplayMessage(string message)
+        {
+            return message;
+        }
+
     }
 }

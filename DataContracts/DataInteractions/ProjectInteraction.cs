@@ -1,14 +1,17 @@
-﻿using System.ComponentModel;
+﻿using DataContracts.DataObjects;
 
-namespace DataContracts
+namespace DataContracts.DataInteractions
 {
     public class ProjectInteraction
     {
-        public static Project NewProject()
+        public static Project AddNewProject(string projectName)
         {
             //TEST IMPLEMENTATION
             //---------------------------------------
-            return new Project("test");
+            Project addProject = new Project(projectName);
+            DataDictionaries.ProjectDictionary.Add(addProject.Id, addProject);
+
+            return addProject;
             //---------------------------------------
         }
 

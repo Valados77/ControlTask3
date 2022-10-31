@@ -6,7 +6,7 @@
         {
             Admin,
             Leader,
-            Employee
+            User
         }
     }
 }

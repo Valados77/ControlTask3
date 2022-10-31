@@ -1,5 +1,4 @@
-﻿
-namespace DataContracts
+﻿namespace DataContracts.DataObjects
 {
     public class User : BaseEntity
     {
@@ -17,7 +16,7 @@ namespace DataContracts
 
         public User(string username,
             string password,
-            Enums.AccessRoles accessRole) 
+            Enums.AccessRoles accessRole)
             : this(username, password, accessRole, "unknown")
         {
             Notify?.Invoke(""); //DELETE
@@ -32,6 +31,8 @@ namespace DataContracts
             Enums.AccessRoles accessRole,
             string fullName)
         {
+            Username = username;
+            Password = password;
             FullName = fullName;
         }
 

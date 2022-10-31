@@ -1,4 +1,4 @@
-﻿namespace DataContracts
+﻿namespace DataContracts.DataObjects
 {
     public class Project : BaseEntity
     {
@@ -34,6 +34,7 @@
             int maxHours,
             string leaderUserId)
         {
+            Name = name;
             ExpirationDate = expirationDate;
             MaxHours = maxHours;
             LeaderUserId = leaderUserId;

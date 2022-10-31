@@ -1,10 +1,9 @@
-﻿
-namespace DataContracts
+﻿namespace DataContracts.DataObjects
 {
     public class TimeTrackEntry : BaseEntity
     {
-        public TimeTrackEntry(string userId, 
-            string projectId, 
+        public TimeTrackEntry(string userId,
+            string projectId,
             int value)
         {
             UserId = userId;

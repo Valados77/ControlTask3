@@ -1,15 +1,10 @@
 ﻿using Application;
-using DataContracts;
 using Business;
 using Business.BusinesObjects;
 
-class Program
+class Program : ProgramInteraction
 {
     public static DataFacade dataFacade = new DataFacade();
-
-    public static UserData LoginingUser = new UserData(new User("test", 
-        "12345", 
-        Enums.AccessRoles.Admin));
 
     static void Main(string[] args)
     {
@@ -19,14 +14,16 @@ class Program
         Console.WriteLine("Enter \"reg\" to register new user");
         while (Console.ReadLine() == "reg")
         {
-            ProgramInteraction.RegisterNewUser();
+            ProgramInteraction.RegisterNewUser(dataFacade);
             Console.WriteLine("end");   
             Console.WriteLine("Enter \"reg\" to register new user");
         }
 
-        DataDictionaries.PrintUserDictionary();
+        //Print(dataFacade.ReturnAllActiveUser());
 
-        User loginingUser = ProgramInteraction.LoginingUser();
+        ProgramInteraction.Print(dataFacade.ReturnAllExpiredProjects());
+
+        UserData? loginingUser = ProgramInteraction.LoginingUser(dataFacade);
         ////---------------------------------------
     }
 }
