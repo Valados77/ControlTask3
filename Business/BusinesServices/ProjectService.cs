@@ -4,17 +4,17 @@ namespace Business.BusinesServices
 {
     internal class ProjectService
     {
-        public List<ProjectData> GetAllExpiredProjects(List<ProjectData> ProjectList)
+        public Dictionary<string, ProjectData> GetAllExpiredProjects(Dictionary<string, ProjectData> ProjectList)
         {
-            var ExpiredProjects = ProjectList.Where(p => p.Project.ExpirationDate >= DateTime.Now);
+            var ExpiredProjects = ProjectList.Where(p => p.Value.Project.ExpirationDate >= DateTime.Now);
 
-            return ExpiredProjects.ToList();
+            return ExpiredProjects.ToDictionary(p => p.Key, p => p.Value);
         }
 
-        public List<ProjectData> GetAllProjectsWihMoreEmployees(List<ProjectData> projectsList, int quantity)
+        public Dictionary<string, ProjectData> GetAllProjectsWihMoreEmployees(Dictionary<string, ProjectData> projectsList, int quantity)
         {
-            var projects = projectsList.Where(p => p.EmployeesList.Count >= quantity);
-            return projects.ToList();
+            var projects = projectsList.Where(p => p.Value.employeesList.Count >= quantity);
+            return projects.ToDictionary(p => p.Key, p => p.Value);
         }
     }
 }

@@ -5,23 +5,23 @@ namespace Business.BusinesServices
 {
     internal class UserService
     {
-        public List<UserData> GetAllActiveUser(List<UserData> userList)
+        public Dictionary<string, UserData> GetAllActiveUser(Dictionary<string, UserData> userList)
         {
-            var activeUsers = userList.Where(p => p.User.IsActive == true);
+            var activeUsers = userList.Where(p => p.Value.User.IsActive == true);
 
-            return activeUsers.ToList();
+            return activeUsers.ToDictionary(p => p.Key, p => p.Value);
         }
 
-        public List<UserData> GetAllLeader(List<UserData> userList)
+        public Dictionary<string, UserData> GetAllLeader(Dictionary<string, UserData> userList)
         {
-            var Leaders = userList.Where(p => p.User.AccessRole == Enums.AccessRoles.Leader);
-            return Leaders.ToList();
+            var Leaders = userList.Where(p => p.Value.User.AccessRole == Enums.AccessRoles.Leader);
+            return Leaders.ToDictionary(p => p.Key, p => p.Value);
         }
 
-        public List<UserData> GetAllActiveUsersFromSomeTime(List<UserData> userList, int time)
+        public Dictionary<string, UserData> GetAllActiveUsersFromSomeTime(Dictionary<string, UserData> userList, int time)
         {
-            var Leaders = userList.Where(p => p.User.AccessRole == Enums.AccessRoles.Leader && p.SumOfSubmittedTime >= time);
-            return Leaders.ToList();
+            var Leaders = userList.Where(p => p.Value.User.AccessRole == Enums.AccessRoles.Leader && p.Value.SumOfSubmittedTime >= time);
+            return Leaders.ToDictionary(p => p.Key, p => p.Value);
         }
     }
 }

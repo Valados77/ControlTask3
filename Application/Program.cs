@@ -4,8 +4,6 @@ using Business.BusinesObjects;
 
 class Program : ProgramInteraction
 {
-    public static DataFacade dataFacade = new DataFacade();
-
     static void Main(string[] args)
     {
 
@@ -14,16 +12,16 @@ class Program : ProgramInteraction
         Console.WriteLine("Enter \"reg\" to register new user");
         while (Console.ReadLine() == "reg")
         {
-            ProgramInteraction.RegisterNewUser(dataFacade);
+            ProgramInteraction.RegisterNewUser();
             Console.WriteLine("end");   
             Console.WriteLine("Enter \"reg\" to register new user");
         }
 
         //Print(dataFacade.ReturnAllActiveUser());
 
-        ProgramInteraction.Print(dataFacade.ReturnAllExpiredProjects());
+        ProgramInteraction.Print(dataFacade.ReturnAllLeader());
 
-        UserData? loginingUser = ProgramInteraction.LoginingUser(dataFacade);
+        UserData? loginingUser = ProgramInteraction.LoginingUser();
         ////---------------------------------------
     }
 }

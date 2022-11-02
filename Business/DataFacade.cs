@@ -1,57 +1,63 @@
 ﻿using Business.BusinesObjects;
 using Business.BusinesServices;
 using DataContracts;
-using DataContracts.DataInteractions;
 using DataContracts.DataObjects;
 
 namespace Business
 {
     public class DataFacade
     {
-        private UserService userService;
-        private ProjectService projectService;
-        private DataLists dataList;
+        private readonly UserService _userService;
+        private readonly ProjectService _projectService;
+        private readonly DataDictionaries _dataDictionary;
         
 
         public DataFacade()
         {
-            userService = new UserService();
-            projectService = new ProjectService();
-            dataList = new DataLists();
+            _userService = new UserService();
+            _projectService = new ProjectService();
+            _dataDictionary = new DataDictionaries();
         }
 
         public bool AddNewUserData(string userName, string password, Enums.AccessRoles role)
         {
-            User user = UserInteraction.AddNewUser(userName, password, role);
+            User user = new User(userName, password, role);
+
             UserData userData = new UserData(user);
             userData.IsActiveChanged += DisplayMessage;
-            dataList.userDataList.Add(userData);
+            _dataDictionary.UserDataDictionary.Add(user.Id, userData);
             return true;
         }
 
         public bool AddNewProjectData(string projectName)
         {
-            Project project = ProjectInteraction.AddNewProject(projectName);
+            Project project = new Project(projectName);
+
             ProjectData projectData = new ProjectData(project);
             projectData.IsActiveChanged += DisplayMessage;
-            dataList.projectDataList.Add(projectData);
+            _dataDictionary.ProjectDataDictionary.Add(project.Id, projectData);
             return true;
         }
 
-        public List<UserData> ReturnAllActiveUser()
+        public Dictionary<string, UserData> ReturnAllUser()
         {
-            List<UserData> activeUsers = userService.GetAllActiveUser(dataList.userDataList);
+            return _dataDictionary.UserDataDictionary;
+        }
+
+        public Dictionary<string, UserData> ReturnAllActiveUser()
+        {
+            Dictionary<string, UserData> activeUsers = _userService.GetAllActiveUser(_dataDictionary.UserDataDictionary);
             return activeUsers;
         }
 
-        public List<UserData> ReturnAllLeader()
+        public Dictionary<string, UserData> ReturnAllLeader()
         {
-            List<UserData> leaderUsers = 
-                userService.GetAllLeader(dataList.userDataList);
+            Dictionary<string, UserData> leaderUsers = 
+                _userService.GetAllLeader(_dataDictionary.UserDataDictionary);
             return leaderUsers;
         }
 
-        public List<UserData> ReturnAllActiveUsersFromSomeTime()
+        public Dictionary<string, UserData> ReturnAllActiveUsersFromSomeTime()
         {
             Console.Write("Enter the minimum working time: ");
             int minTime;
@@ -64,17 +70,17 @@ namespace Business
                 Console.Write("An exception was thrown: ");
                 minTime = 0;
             }
-            List<UserData> leaderUsers = userService.GetAllActiveUsersFromSomeTime(dataList.userDataList, minTime);
+            Dictionary<string, UserData> leaderUsers = _userService.GetAllActiveUsersFromSomeTime(_dataDictionary.UserDataDictionary, minTime);
             return leaderUsers;
         }
 
         public UserData? ReturnUserData(string userName)
         {
-            foreach (var i in dataList.userDataList)
+            foreach (var i in _dataDictionary.UserDataDictionary)
             {
-                if (i.User.Username == userName)
+                if (i.Value.User.Username == userName)
                 {
-                    return i;
+                    return i.Value;
                 }
             }
 
@@ -91,14 +97,14 @@ namespace Business
             return false;
         }
 
-        public List<ProjectData> ReturnAllExpiredProjects()
+        public Dictionary<string, ProjectData> ReturnAllExpiredProjects()
         {
-            List<ProjectData> expiredProjects = 
-                projectService.GetAllExpiredProjects(dataList.projectDataList);
+            Dictionary<string, ProjectData> expiredProjects = 
+                _projectService.GetAllExpiredProjects(_dataDictionary.ProjectDataDictionary);
             return expiredProjects;
         }
 
-        public List<ProjectData> ReturnAllProjectsWihMoreEmployees()
+        public Dictionary<string, ProjectData> ReturnAllProjectsWihMoreEmployees()
         {
             int minEmploys;
             try
@@ -110,8 +116,8 @@ namespace Business
                 Console.Write("An exception was thrown: ");
                 minEmploys = 0;
             }
-            List<ProjectData> Projects =
-                projectService.GetAllProjectsWihMoreEmployees(dataList.projectDataList, minEmploys);
+            Dictionary<string, ProjectData> Projects =
+                _projectService.GetAllProjectsWihMoreEmployees(_dataDictionary.ProjectDataDictionary, minEmploys);
             return Projects;
         }
 

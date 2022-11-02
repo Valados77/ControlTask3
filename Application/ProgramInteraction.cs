@@ -1,12 +1,15 @@
 ﻿using Business;
 using Business.BusinesObjects;
 using DataContracts;
+using DataContracts.DataObjects;
 
 namespace Application;
 
 public class ProgramInteraction
 {
-    public static void Menu(DataFacade dataFacade)
+    public static DataFacade dataFacade = new DataFacade();
+
+    public static void Menu()
     {
         //TEST IMPLEMENTATION
         //---------------------------------------
@@ -21,7 +24,7 @@ public class ProgramInteraction
             switch (Console.ReadLine())
             {
                 case "1":
-                    RegisterNewUser(dataFacade);
+                    RegisterNewUser();
                     break;
                 case "2":
                     //Program.LoginingUser = DataFacade.LoginingUserData();
@@ -32,7 +35,7 @@ public class ProgramInteraction
         //---------------------------------------
     }
 
-    public static bool RegisterNewUser(DataFacade dataFacade)
+    public static bool RegisterNewUser()
     {
         Console.Write("Enter username: ");
         string userName = Console.ReadLine();
@@ -70,7 +73,7 @@ public class ProgramInteraction
         return true;
     }
 
-    public static bool NewProjectData(DataFacade dataFacade)
+    public static bool NewProjectData()
     {
         Console.Write("Enter project name: ");
         string projectName = Console.ReadLine();
@@ -80,7 +83,7 @@ public class ProgramInteraction
         return true;
     }
 
-    public static UserData? LoginingUser(DataFacade dataFacade)
+    public static UserData? LoginingUser()
     {
         Console.WriteLine("Enter username: ");
         string name = Console.ReadLine();
@@ -88,11 +91,12 @@ public class ProgramInteraction
 
         if (userData != null)
         {
+            Console.WriteLine("Login completed");
             Console.Write("Enter password: ");
             string password = Console.ReadLine();
             if (dataFacade.PasswordVerification(userData, password) == true)
             {
-                Console.WriteLine("Login completed");
+                Console.WriteLine("Password completed");
                 return userData;
             }
         }
@@ -100,30 +104,44 @@ public class ProgramInteraction
         return null;
     }
 
-    public static void Print(List<UserData> userData)
+    public static void Print(Dictionary<string, UserData> userData)
     {
         foreach (var user in userData)
         {
-            Console.WriteLine("User: {0}", user.User.Username);
+            Console.WriteLine("User: {0}", user.Value.User.Username);
             Console.WriteLine("---------------------------------");
-            foreach (var timeTrackEntry in user.SubmittedTime)
+            if (user.Value.submittedTime.Any())
             {
-                Console.WriteLine(timeTrackEntry.Date);
+                foreach (var timeTrackEntry in user.Value.submittedTime)
+                {
+                    Console.WriteLine(timeTrackEntry.Date);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Empty submitted time list");
             }
             Console.WriteLine("---------------------------------");
             Console.WriteLine("---------------------------------");
         }
     }
 
-    public static void Print(List<ProjectData> projectDatas)
+    public static void Print(Dictionary<string, ProjectData> projectDatas)
     {
         foreach (var project in projectDatas)
         {
-            Console.WriteLine("Project: {0}", project.Project.Name);
+            Console.WriteLine("Project: {0}", project.Value.Project.Name);
             Console.WriteLine("---------------------------------");
-            foreach (var employ in project.EmployeesList)
+            if (project.Value.employeesList.Any())
             {
-                Console.WriteLine(employ.Id);
+                foreach (var employ in project.Value.employeesList)
+                {
+                    Console.WriteLine(employ.Id);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Empty employees list");
             }
             Console.WriteLine("---------------------------------");
             Console.WriteLine("---------------------------------");
