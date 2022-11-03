@@ -1,5 +1,4 @@
 ﻿using Application;
-using Business;
 using Business.BusinesObjects;
 
 class Program : ProgramInteraction
@@ -17,9 +16,9 @@ class Program : ProgramInteraction
             Console.WriteLine("Enter \"reg\" to register new user");
         }
 
-        //Print(dataFacade.ReturnAllActiveUser());
+        //Print(DataFacadeInteraction.ReturnAllActiveUser());
 
-        ProgramInteraction.Print(dataFacade.ReturnAllLeader());
+        ProgramInteraction.Print(DataFacadeInteraction.ReturnAllLeader());
 
         UserData? loginingUser = ProgramInteraction.LoginingUser();
         ////---------------------------------------

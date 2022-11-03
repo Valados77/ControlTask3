@@ -13,7 +13,7 @@ namespace Business.BusinesServices
 
         public Dictionary<string, ProjectData> GetAllProjectsWihMoreEmployees(Dictionary<string, ProjectData> projectsList, int quantity)
         {
-            var projects = projectsList.Where(p => p.Value.employeesList.Count >= quantity);
+            var projects = projectsList.Where(p => p.Value.EmployeesList.Count >= quantity);
             return projects.ToDictionary(p => p.Key, p => p.Value);
         }
     }

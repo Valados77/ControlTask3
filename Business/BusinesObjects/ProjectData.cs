@@ -7,17 +7,17 @@ namespace Business.BusinesObjects
         public delegate string IsActiveChangedHandler(string msg);
         public event IsActiveChangedHandler? IsActiveChanged;
         public Project Project { get; private set; }
-        public List<User> employeesList = new List<User>();
+        public List<User> EmployeesList = new List<User>();
 
         public ProjectData(Project project, List<User>? employeesList = null)
         {
             Project = project;
-            this.employeesList = employeesList ?? new List<User>();
+            EmployeesList = employeesList ?? new List<User>();
         }
 
         public void AddEmploy(User newEmploy)
         {
-            employeesList?.Add(newEmploy);
+            EmployeesList?.Add(newEmploy);
             IsActiveChanged?.Invoke($"Add new employ for the {Project.Name}");
         }
     }

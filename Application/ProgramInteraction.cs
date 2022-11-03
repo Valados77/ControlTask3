@@ -1,13 +1,12 @@
 ﻿using Business;
 using Business.BusinesObjects;
 using DataContracts;
-using DataContracts.DataObjects;
 
 namespace Application;
 
 public class ProgramInteraction
 {
-    public static DataFacade dataFacade = new DataFacade();
+    public static DataFacade DataFacadeInteraction = new DataFacade();
 
     public static void Menu()
     {
@@ -27,7 +26,7 @@ public class ProgramInteraction
                     RegisterNewUser();
                     break;
                 case "2":
-                    //Program.LoginingUser = DataFacade.LoginingUserData();
+                    //Program.LoginingUser = DataFacadeInteraction.LoginingUserData();
                     break;
 
             }
@@ -68,7 +67,7 @@ public class ProgramInteraction
                 role = Enums.AccessRoles.User;
                 break;
         }
-        dataFacade.AddNewUserData(userName, password, role);
+        DataFacadeInteraction.AddNewUserData(userName, password, role);
 
         return true;
     }
@@ -78,7 +77,7 @@ public class ProgramInteraction
         Console.Write("Enter project name: ");
         string projectName = Console.ReadLine();
        
-        dataFacade.AddNewProjectData(projectName);
+        DataFacadeInteraction.AddNewProjectData(projectName);
 
         return true;
     }
@@ -87,14 +86,14 @@ public class ProgramInteraction
     {
         Console.WriteLine("Enter username: ");
         string name = Console.ReadLine();
-        UserData userData = dataFacade.ReturnUserData(name);
+        UserData userData = DataFacadeInteraction.ReturnUserData(name);
 
         if (userData != null)
         {
             Console.WriteLine("Login completed");
             Console.Write("Enter password: ");
             string password = Console.ReadLine();
-            if (dataFacade.PasswordVerification(userData, password) == true)
+            if (DataFacadeInteraction.PasswordVerification(userData, password) == true)
             {
                 Console.WriteLine("Password completed");
                 return userData;
@@ -110,9 +109,9 @@ public class ProgramInteraction
         {
             Console.WriteLine("User: {0}", user.Value.User.Username);
             Console.WriteLine("---------------------------------");
-            if (user.Value.submittedTime.Any())
+            if (user.Value.SubmittedTime.Any())
             {
-                foreach (var timeTrackEntry in user.Value.submittedTime)
+                foreach (var timeTrackEntry in user.Value.SubmittedTime)
                 {
                     Console.WriteLine(timeTrackEntry.Date);
                 }
@@ -132,9 +131,9 @@ public class ProgramInteraction
         {
             Console.WriteLine("Project: {0}", project.Value.Project.Name);
             Console.WriteLine("---------------------------------");
-            if (project.Value.employeesList.Any())
+            if (project.Value.EmployeesList.Any())
             {
-                foreach (var employ in project.Value.employeesList)
+                foreach (var employ in project.Value.EmployeesList)
                 {
                     Console.WriteLine(employ.Id);
                 }

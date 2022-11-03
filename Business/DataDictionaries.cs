@@ -4,8 +4,8 @@ namespace Business
 {
     internal class DataDictionaries
     {
-        public Dictionary<string, UserData> UserDataDictionary; //List for storing business objects
-        public Dictionary<string, ProjectData> ProjectDataDictionary; //List for storing business objects
+        public Dictionary<string, UserData> UserDataDictionary;
+        public Dictionary<string, ProjectData> ProjectDataDictionary;
 
         public DataDictionaries()
         {
