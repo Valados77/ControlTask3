@@ -1,5 +1,5 @@
 ﻿using Application;
-using Business.BusinesObjects;
+using Business.BusinessObjects;
 
 class Program : ProgramInteraction
 {
@@ -12,15 +12,15 @@ class Program : ProgramInteraction
         while (Console.ReadLine() == "reg")
         {
             ProgramInteraction.RegisterNewUser();
-            Console.WriteLine("end");   
+            Console.WriteLine("end");
             Console.WriteLine("Enter \"reg\" to register new user");
         }
 
         //Print(DataFacadeInteraction.ReturnAllActiveUser());
 
-        ProgramInteraction.Print(DataFacadeInteraction.ReturnAllLeader());
+        ProgramInteraction.Print(DataFacadeInteraction.ReturnAllUser());
 
-        UserData? loginingUser = ProgramInteraction.LoginingUser();
+        UserData? loginingUser = ProgramInteraction.LoginUser();
         ////---------------------------------------
     }
 }

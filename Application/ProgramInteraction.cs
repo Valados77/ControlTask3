@@ -1,5 +1,6 @@
 ﻿using Business;
-using Business.BusinesObjects;
+using Business.BusinessObjects;
+using Business.BusinessServices;
 using DataContracts;
 
 namespace Application;
@@ -26,7 +27,7 @@ public class ProgramInteraction
                     RegisterNewUser();
                     break;
                 case "2":
-                    //Program.LoginingUser = DataFacadeInteraction.LoginingUserData();
+                    //Program.LoginUser = DataFacadeInteraction.LoginingUserData();
                     break;
 
             }
@@ -76,17 +77,17 @@ public class ProgramInteraction
     {
         Console.Write("Enter project name: ");
         string projectName = Console.ReadLine();
-       
+
         DataFacadeInteraction.AddNewProjectData(projectName);
 
         return true;
     }
 
-    public static UserData? LoginingUser()
+    public static UserData? LoginUser()
     {
         Console.WriteLine("Enter username: ");
         string name = Console.ReadLine();
-        UserData userData = DataFacadeInteraction.ReturnUserData(name);
+        UserData? userData = DataFacadeInteraction.ReturnUserDataByName(name);
 
         if (userData != null)
         {
@@ -103,15 +104,15 @@ public class ProgramInteraction
         return null;
     }
 
-    public static void Print(Dictionary<string, UserData> userData)
+    public static void Print(List<UserData> userData)
     {
         foreach (var user in userData)
         {
-            Console.WriteLine("User: {0}", user.Value.User.Username);
+            Console.WriteLine("User: {0}", user.User.Username);
             Console.WriteLine("---------------------------------");
-            if (user.Value.SubmittedTime.Any())
+            if (user.SubmittedTime.Any())
             {
-                foreach (var timeTrackEntry in user.Value.SubmittedTime)
+                foreach (var timeTrackEntry in user.SubmittedTime)
                 {
                     Console.WriteLine(timeTrackEntry.Date);
                 }
@@ -125,15 +126,15 @@ public class ProgramInteraction
         }
     }
 
-    public static void Print(Dictionary<string, ProjectData> projectDatas)
+    public static void Print(List<ProjectData> projectDatas)
     {
         foreach (var project in projectDatas)
         {
-            Console.WriteLine("Project: {0}", project.Value.Project.Name);
+            Console.WriteLine("Project: {0}", project.Project.Name);
             Console.WriteLine("---------------------------------");
-            if (project.Value.EmployeesList.Any())
+            if (project.EmployeesList.Any())
             {
-                foreach (var employ in project.Value.EmployeesList)
+                foreach (var employ in project.EmployeesList)
                 {
                     Console.WriteLine(employ.Id);
                 }
@@ -147,5 +148,3 @@ public class ProgramInteraction
         }
     }
 }
-
-    
