@@ -1,7 +1,8 @@
-﻿using Application;
-using Business.BusinessObjects;
+﻿using Business.BusinessObjects;
 
-class Program : ProgramInteraction
+namespace Application;
+
+internal class Program : ProgramInteraction
 {
     static void Main(string[] args)
     {

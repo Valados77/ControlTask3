@@ -1,26 +1,26 @@
-﻿using Business;
-using Contracts;
+﻿using Contracts;
+using DataContracts;
 using Repositories.Xml.Repositories;
 
 namespace Solution
 {
     public class Mapper
     {
-        private readonly DataFacade _userData;
+        private readonly ObjectLists _objectLists;
 
-        public Mapper(DataFacade userData)
+        public Mapper(ObjectLists objectLists)
         {
-            _userData = userData;
+            _objectLists = objectLists;
         }
 
         public IUserRepository GetUserRepository()
         {
-            return new UserRepository(_userData);
+            return new UserRepository(_objectLists);
         }
 
         public IProjectRepository GetProjectRepository()
         {
-            return new ProjectRepository(_userData);
+            return new ProjectRepository(_objectLists);
         }
     }
 }

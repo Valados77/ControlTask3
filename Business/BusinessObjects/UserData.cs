@@ -4,9 +4,9 @@ namespace Business.BusinessObjects
 {
     public class UserData
     {
-        public delegate string IsActiveChangedHandler(string msg);
-        public event IsActiveChangedHandler? IsActiveChanged;
-        
+        public delegate string IsActiveChangedHandlerUser(string msg);
+        public event IsActiveChangedHandlerUser? IsActiveChanged;
+
         public User? User { get; private set; }
         public List<TimeTrackEntry> SubmittedTime;
         public int SumOfSubmittedTime { get; private set; }

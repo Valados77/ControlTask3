@@ -1,13 +1,17 @@
 ﻿using Business;
 using Business.BusinessObjects;
-using Business.BusinessServices;
 using DataContracts;
+using Mediator;
+using Mediator.Components;
 
 namespace Application;
 
 public class ProgramInteraction
 {
     public static DataFacade DataFacadeInteraction = new DataFacade();
+    public static SubscribeTo SubscribeToInteraction = new SubscribeTo();
+    public static ConcreteMediator ConcreteMediatorInteraction =
+        new ConcreteMediator(SubscribeToInteraction);
 
     public static void Menu()
     {

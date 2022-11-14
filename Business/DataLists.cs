@@ -11,6 +11,7 @@ namespace Business
         {
             UserDataList = new List<UserData>();
             ProjectDataList = new List<ProjectData>();
+            //IsActiveChanged?.Invoke("A new DataLists has been created");
         }
     }
 }

@@ -1,47 +1,48 @@
-﻿using Business;
-using Contracts;
+﻿using Contracts;
+using DataContracts;
 using DataContracts.DataObjects;
 
 namespace Repositories.Xml.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
-        private readonly DataFacade _projectData;
+        private readonly ObjectLists _objectLists;
 
-        public ProjectRepository(DataFacade projectData)
+        public ProjectRepository(ObjectLists objectLists)
         {
-            _projectData = projectData;
+            _objectLists = objectLists;
         }
 
-        public string Insert(Project entity) // return project id
+        public string Insert(Project project) // return project id
         {
-            return _projectData.AddNewProjectData(entity.Name);
+            _objectLists.ProjectDataList.Add(project);
+            return project.Id;
         }
 
         public void Delete(string id)
         {
-            foreach (var projectData in _projectData.ReturnAllProject())
+            foreach (var project in _objectLists.ProjectDataList)
             {
-                if (projectData.Project?.Id == id)
+                if (project.Id == id)
                 {
-                    _projectData.ReturnAllProject().Remove(projectData);
+                    _objectLists.ProjectDataList.Remove(project);
                     return;
                 }
             }
         }
 
-        public IEnumerable<Project?> GetAll()
+        public IEnumerable<Project?> GetAll() //TEST
         {
-            return _projectData.ReturnAllProject().Select(x => x.Project);
+            return _objectLists.ProjectDataList;
         }
 
         public Project? Get(string id)
         {
-            foreach (var projectData in _projectData.ReturnAllProject())
+            foreach (var project in _objectLists.ProjectDataList)
             {
-                if (projectData.Project?.Id == id)
+                if (project.Id == id)
                 {
-                    var newProject = projectData.Project;
+                    var newProject = project;
                     return newProject;
                 }
             }

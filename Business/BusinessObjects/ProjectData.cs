@@ -6,6 +6,7 @@ namespace Business.BusinessObjects
     {
         public delegate string IsActiveChangedHandler(string msg);
         public event IsActiveChangedHandler? IsActiveChanged;
+
         public Project? Project { get; private set; }
         public List<User> EmployeesList = new List<User>();
 

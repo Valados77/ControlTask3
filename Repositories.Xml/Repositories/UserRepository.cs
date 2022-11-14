@@ -1,30 +1,31 @@
-﻿using Business;
-using Contracts;
+﻿using Contracts;
+using DataContracts;
 using DataContracts.DataObjects;
 
 namespace Repositories.Xml.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly DataFacade _userData;
+    private readonly ObjectLists _objectLists;
 
-    public UserRepository(DataFacade userData)
+    public UserRepository(ObjectLists objectLists)
     {
-        _userData = userData;
+        _objectLists = objectLists;
     }
 
-    public string Insert(User entity) // return User id
+    public string Insert(User user) // return User id
     {
-        return _userData.AddNewUserData(entity.Username, entity.Password, entity.AccessRole);
+        _objectLists.UserDataList.Add(user);
+        return user.Id;
     }
 
     public void Delete(string id)
     {
-        foreach (var userData in _userData.ReturnAllUser())
+        foreach (var user in _objectLists.UserDataList)
         {
-            if (userData.User?.Id == id)
+            if (user.Id == id)
             {
-                _userData.ReturnAllUser().Remove(userData);
+                _objectLists.UserDataList.Remove(user);
                 return;
             }
         }
@@ -32,16 +33,16 @@ public class UserRepository : IUserRepository
 
     public IEnumerable<User?> GetAll()
     {
-        return _userData.ReturnAllUser().Select(x => x.User);
+        return _objectLists.UserDataList;
     }
 
     public User? Get(string id)
     {
-        foreach (var userData in _userData.ReturnAllUser())
+        foreach (var user in _objectLists.UserDataList)
         {
-            if (userData.User?.Id == id)
+            if (user.Id == id)
             {
-                var newUser = userData.User;
+                var newUser = user;
                 return newUser;
             }
         }

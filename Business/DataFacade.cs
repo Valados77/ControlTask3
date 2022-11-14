@@ -10,7 +10,7 @@ namespace Business
         private readonly UserService _userService;
         private readonly ProjectService _projectService;
         private readonly DataLists _dataList;
-        
+        private static bool _subscribeOn = true;
 
         public DataFacade()
         {
@@ -37,6 +37,7 @@ namespace Business
             ProjectData projectData = new ProjectData(project);
             projectData.IsActiveChanged += DisplayMessage;
             _dataList.ProjectDataList.Add(projectData);
+
             return projectData.Project.Id;
         }
 
@@ -53,7 +54,7 @@ namespace Business
 
         public List<UserData> ReturnAllLeader()
         {
-            List<UserData> leaderUsers = 
+            List<UserData> leaderUsers =
                 _userService.GetAllLeader(_dataList.UserDataList);
             return leaderUsers;
         }
@@ -118,7 +119,7 @@ namespace Business
 
         public List<ProjectData> ReturnAllExpiredProjects()
         {
-            List<ProjectData> expiredProjects = 
+            List<ProjectData> expiredProjects =
                 _projectService.GetAllExpiredProjects(_dataList.ProjectDataList);
             return expiredProjects;
         }
@@ -145,5 +146,9 @@ namespace Business
             return message;
         }
 
+        private static void ChangeSubscribe(bool status)
+        {
+            _subscribeOn = status;
+        }
     }
 }
