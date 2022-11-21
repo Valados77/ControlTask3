@@ -2,15 +2,15 @@
 using Business.BusinessServices;
 using DataContracts;
 using DataContracts.DataObjects;
+using Mediator.Components;
 
 namespace Business
 {
-    public class DataFacade
+    public class DataFacade : BaseComponent
     {
         private readonly UserService _userService;
         private readonly ProjectService _projectService;
         private readonly DataLists _dataList;
-        private static bool _subscribeOn = true;
 
         public DataFacade()
         {
@@ -30,6 +30,18 @@ namespace Business
             return userData.User.Id;
         }
 
+        public void DeleteUserData(string userId)
+        {
+            foreach (var user in _dataList.UserDataList)
+            {
+                if (user.User!.Id == userId)
+                {
+                    _dataList.UserDataList.Remove(user);
+                    return;
+                }
+            }
+        }
+
         public string AddNewProjectData(string projectName)
         {
             Project project = new Project(projectName);
@@ -39,6 +51,36 @@ namespace Business
             _dataList.ProjectDataList.Add(projectData);
 
             return projectData.Project.Id;
+        }
+
+        public void DeleteProjectData(string projectId)
+        {
+            foreach (var project in _dataList.ProjectDataList)
+            {
+                if (project.Project!.Id == projectId)
+                {
+                    _dataList.ProjectDataList.Remove(project);
+                    return;
+                }
+            }
+        }
+
+        public UserData? LoginUserData(string userName, string password)
+        {
+            UserData? userData = ReturnUserDataByName(userName);
+            if (userData != null)
+            {
+                if (PasswordVerification(userData, password) == true)
+                {
+                    return userData;
+                }
+            }
+            return null;
+        }
+
+        public UserData? LogoutUserData()
+        {
+            return null;
         }
 
         public List<UserData> ReturnAllUser()
@@ -76,11 +118,16 @@ namespace Business
             return leaderUsers;
         }
 
+        public void AssignProjectForUser(UserData userData, ProjectData projectData)
+        {
+            userData.User!.ProjectIdForUser = projectData.Project!.Id;
+        }
+
         public UserData? ReturnUserDataByName(string userName)
         {
             foreach (var i in _dataList.UserDataList)
             {
-                if (i.User.Username == userName)
+                if (i.User!.Username == userName)
                 {
                     return i;
                 }
@@ -93,7 +140,7 @@ namespace Business
         {
             foreach (var i in _dataList.UserDataList)
             {
-                if (i.User.Username == userId)
+                if (i.User!.Id == userId)
                 {
                     return i;
                 }
@@ -141,14 +188,60 @@ namespace Business
             return Projects;
         }
 
+        public ProjectData? ReturnProjectDataById(string projectId)
+        {
+            foreach (var i in _dataList.ProjectDataList)
+            {
+                if (i.Project!.Id == projectId)
+                {
+                    return i;
+                }
+            }
+
+            return null;
+        }
+
+        public ProjectData? ReturnProjectDataByName(string? projectName)
+        {
+            foreach (var i in _dataList.ProjectDataList)
+            {
+                if (i.Project!.Name == projectName)
+                {
+                    return i;
+                }
+            }
+
+            return null;
+        }
+
+        public void AssignProjectLeader(UserData userData, ProjectData projectData)
+        {
+            projectData.Project!.LeaderUserId = userData.User!.Id;
+        }
+
+        public DateTime ReturnSubmitDateTime(ProjectData? projectData)
+        {
+            return projectData.Project!.SubmitDateTime;
+        }
+
+        public void SetViewingDateTime(ProjectData? projectData)
+        {
+            projectData.Project.ViewingDateTime.Add(DateTime.Now);
+        }
+
+        public void SetMaxHoursPerMonth(ProjectData? projectData, int hours)
+        {
+            projectData!.Project!.MaxHoursPerMonth = hours;
+        }
+
+        public int ReturnMaxHoursPerMonth(ProjectData? projectData)
+        {
+            return projectData.Project!.MaxHoursPerMonth;
+        }
+
         private static string DisplayMessage(string message)
         {
             return message;
-        }
-
-        private static void ChangeSubscribe(bool status)
-        {
-            _subscribeOn = status;
         }
     }
 }

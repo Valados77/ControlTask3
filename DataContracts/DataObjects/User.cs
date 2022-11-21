@@ -9,13 +9,14 @@
         public string FullName { get; set; }
         public bool IsActive { get; set; }
         public Enums.AccessRoles AccessRole { get; set; }
+        public string ProjectIdForUser { get; set; }
 
         public User(string username,
             string password,
             Enums.AccessRoles accessRole)
             : this(username, password, accessRole, "unknown")
         {
-            Id = string.Format("{0:d4}U", Count++); //U-user
+            Id = $"{Count++:d4}U"; //U-user
             Username = username;
             Password = password;
             AccessRole = accessRole;

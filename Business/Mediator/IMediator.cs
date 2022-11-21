@@ -1,6 +1,4 @@
-﻿using Business.BusinessObjects;
-
-namespace Mediator;
+﻿namespace Mediator;
 
 public interface IMediator
 {

@@ -1,17 +1,12 @@
 ﻿using Business;
 using Business.BusinessObjects;
 using DataContracts;
-using Mediator;
-using Mediator.Components;
 
 namespace Application;
 
 public class ProgramInteraction
 {
     public static DataFacade DataFacadeInteraction = new DataFacade();
-    public static SubscribeTo SubscribeToInteraction = new SubscribeTo();
-    public static ConcreteMediator ConcreteMediatorInteraction =
-        new ConcreteMediator(SubscribeToInteraction);
 
     public static void Menu()
     {
@@ -87,26 +82,26 @@ public class ProgramInteraction
         return true;
     }
 
-    public static UserData? LoginUser()
-    {
-        Console.WriteLine("Enter username: ");
-        string name = Console.ReadLine();
-        UserData? userData = DataFacadeInteraction.ReturnUserDataByName(name);
+    //public static UserData? LoginUser()
+    //{
+    //    Console.WriteLine("Enter username: ");
+    //    string name = Console.ReadLine();
+    //    UserData? userData = DataFacadeInteraction.ReturnUserDataByName(name);
 
-        if (userData != null)
-        {
-            Console.WriteLine("Login completed");
-            Console.Write("Enter password: ");
-            string password = Console.ReadLine();
-            if (DataFacadeInteraction.PasswordVerification(userData, password) == true)
-            {
-                Console.WriteLine("Password completed");
-                return userData;
-            }
-        }
-        Console.WriteLine("Invalid username or password");
-        return null;
-    }
+    //    if (userData != null)
+    //    {
+    //        Console.WriteLine("Login completed");
+    //        Console.Write("Enter password: ");
+    //        string password = Console.ReadLine();
+    //        if (DataFacadeInteraction.PasswordVerification(userData, password) == true)
+    //        {
+    //            Console.WriteLine("Password completed");
+    //            return userData;
+    //        }
+    //    }
+    //    Console.WriteLine("Invalid username or password");
+    //    return null;
+    //}
 
     public static void Print(List<UserData> userData)
     {

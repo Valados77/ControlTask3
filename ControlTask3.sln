@@ -3,21 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{1B11F53F-DEE4-4E75-8C74-799A8FA66CCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{1B11F53F-DEE4-4E75-8C74-799A8FA66CCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{02072EC0-B4F7-4A95-A125-EB5E4008496C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{02072EC0-B4F7-4A95-A125-EB5E4008496C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{056A0776-7AF7-4386-A45D-EEE8D5F72B48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{056A0776-7AF7-4386-A45D-EEE8D5F72B48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataContracts", "DataContracts\DataContracts.csproj", "{DCE6EA2D-9072-4DE7-998F-232145B628B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataContracts", "DataContracts\DataContracts.csproj", "{DCE6EA2D-9072-4DE7-998F-232145B628B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{16CA9F0D-9023-4B1D-8991-2D7E45612960}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{16CA9F0D-9023-4B1D-8991-2D7E45612960}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediator", "Mediator\Mediator.csproj", "{6C52A174-341D-46E2-A413-F21DE6B592C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories.Xml", "Repositories.Xml\Repositories.Xml.csproj", "{2B6B134C-02B2-44DD-95FA-AEA6D9B7D989}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories.Xml", "Repositories.Xml\Repositories.Xml.csproj", "{2B6B134C-02B2-44DD-95FA-AEA6D9B7D989}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solution", "Solution\Solution.csproj", "{A6FB49BE-3BEC-4914-9D69-DFB250D88F98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solution", "Solution\Solution.csproj", "{A6FB49BE-3BEC-4914-9D69-DFB250D88F98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +43,6 @@ Global
 		{16CA9F0D-9023-4B1D-8991-2D7E45612960}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16CA9F0D-9023-4B1D-8991-2D7E45612960}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16CA9F0D-9023-4B1D-8991-2D7E45612960}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C52A174-341D-46E2-A413-F21DE6B592C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C52A174-341D-46E2-A413-F21DE6B592C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C52A174-341D-46E2-A413-F21DE6B592C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C52A174-341D-46E2-A413-F21DE6B592C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2B6B134C-02B2-44DD-95FA-AEA6D9B7D989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2B6B134C-02B2-44DD-95FA-AEA6D9B7D989}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B6B134C-02B2-44DD-95FA-AEA6D9B7D989}.Release|Any CPU.ActiveCfg = Release|Any CPU
