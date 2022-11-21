@@ -1,12 +1,30 @@
 ﻿using Business;
 using Business.BusinessObjects;
 using DataContracts;
+using DataContracts.DataObjects;
+using Mediator;
+using Mediator.Components;
 
 namespace Application;
 
 public class ProgramInteraction
 {
-    public static DataFacade DataFacadeInteraction = new DataFacade();
+    
+    private static UserData NowUserData { get; set; }
+    private static ProjectData nowProjectData { get; set; }
+
+
+    public static readonly DataFacade _dataFacade = new DataFacade();
+    public static readonly SubscribeTo _subscribeTo = new SubscribeTo(NowUserData, nowProjectData);
+    public static readonly AdminBusinessObject _adminBusinessObject = new AdminBusinessObject();
+    public static readonly LeaderBusinessObject _leaderBusinessObject = new LeaderBusinessObject();
+    public static readonly UserBusinessObject _userBusinessObject = new UserBusinessObject();
+    public static ConcreteMediator ConcreteMediatorInteraction = new ConcreteMediator(
+        _dataFacade,
+        _subscribeTo,
+        _adminBusinessObject,
+        _leaderBusinessObject,
+        _userBusinessObject);
 
     public static void Menu()
     {
@@ -67,8 +85,7 @@ public class ProgramInteraction
                 role = Enums.AccessRoles.User;
                 break;
         }
-        DataFacadeInteraction.AddNewUserData(userName, password, role);
-
+        _adminBusinessObject.CreateUserData();
         return true;
     }
 
@@ -77,31 +94,10 @@ public class ProgramInteraction
         Console.Write("Enter project name: ");
         string projectName = Console.ReadLine();
 
-        DataFacadeInteraction.AddNewProjectData(projectName);
+        _adminBusinessObject.CreateProjectData();
 
         return true;
     }
-
-    //public static UserData? LoginUser()
-    //{
-    //    Console.WriteLine("Enter username: ");
-    //    string name = Console.ReadLine();
-    //    UserData? userData = DataFacadeInteraction.ReturnUserDataByName(name);
-
-    //    if (userData != null)
-    //    {
-    //        Console.WriteLine("Login completed");
-    //        Console.Write("Enter password: ");
-    //        string password = Console.ReadLine();
-    //        if (DataFacadeInteraction.PasswordVerification(userData, password) == true)
-    //        {
-    //            Console.WriteLine("Password completed");
-    //            return userData;
-    //        }
-    //    }
-    //    Console.WriteLine("Invalid username or password");
-    //    return null;
-    //}
 
     public static void Print(List<UserData> userData)
     {

@@ -86,7 +86,7 @@ public class ConcreteMediator : IMediator
             case "DoCreateUserData":
                 _dataFacade.AddNewUserData("test", "test", Enums.AccessRoles.User);
                 break;
-            case "DoCreateUserProject":
+            case "DoCreateProjectData":
                 _dataFacade.AddNewProjectData("test");
                 break;
             case "DoReadUserData":

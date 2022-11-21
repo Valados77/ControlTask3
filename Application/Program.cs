@@ -19,9 +19,9 @@ internal class Program : ProgramInteraction
 
         //Print(DataFacadeInteraction.ReturnAllActiveUser());
 
-        ProgramInteraction.Print(DataFacadeInteraction.ReturnAllUser());
+        ProgramInteraction.Print(_dataFacade.ReturnAllUser());
 
-        UserData? loginingUser = ProgramInteraction.LoginUser();
+        _userBusinessObject.DoLoginUser();
         ////---------------------------------------
     }
 }

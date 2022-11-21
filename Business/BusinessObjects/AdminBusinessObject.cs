@@ -10,9 +10,9 @@ namespace Business.BusinessObjects
             this._mediator.Notify(this, "DoCreateUserData");
         }
 
-        public void CreateUserProject()
+        public void CreateProjectData()
         {
-            this._mediator.Notify(this, "DoCreateUserProject");
+            this._mediator.Notify(this, "DoCreateProjectData");
         }
 
         public void ReadUserData()
