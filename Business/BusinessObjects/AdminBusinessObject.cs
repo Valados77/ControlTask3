@@ -1,48 +1,76 @@
-﻿using DataContracts;
-using Mediator.Components;
+﻿
+using Business.Mediator;
+using DataContracts;
 
 namespace Business.BusinessObjects
 {
     public class AdminBusinessObject : LeaderBusinessObject
     {
-        public void CreateUserData()
+        public void DoCreateUserData(
+            string userName, 
+            string password,
+            Enums.AccessRoles role)
         {
-            this._mediator.Notify(this, "DoCreateUserData");
+            this._mediator.Notify(this,
+                Interactions.DoCreateUserData, 
+                userName, 
+                password,
+                role);
         }
 
-        public void CreateProjectData()
+        public void DoCreateProjectData(string name)
         {
-            this._mediator.Notify(this, "DoCreateProjectData");
+            this._mediator.Notify(this,
+                Interactions.DoCreateProjectData,
+                name);
         }
 
-        public void ReadUserData()
+        public void DoReadUserDataById(string id)
         {
-            this._mediator.Notify(this, "DoReadUserData");
+            this._mediator.Notify(this,
+                Interactions.DoReadUserDataById,
+                id);
         }
 
-        public void ReadProjectData()
+        public void DoReadProjectDataById(string id)
         {
-            this._mediator.Notify(this, "DoReadProjectData");
+            this._mediator.Notify(this,
+                Interactions.DoReadProjectDataById,
+                id);
         }
 
-        public void DeleteUserData()
+        public void DoDeleteUserDataById(string id)
         {
-            this._mediator.Notify(this, "DoDeleteUserData");
+            this._mediator.Notify(this,
+                Interactions.DoDeleteUserDataById, 
+                id);
         }
 
-        public void DeleteProjectData()
+        public void DoDeleteProjectDataById(string id)
         {
-            this._mediator.Notify(this, "DoDeleteProjectData");
+            this._mediator.Notify(this,
+                Interactions.DoDeleteProjectDataById,
+                id);
         }
 
-        public void AssignProjectForUser()
+        public void DoAssignProjectForUser(
+            string userName,
+            string projectName)
         {
-            this._mediator.Notify(this, "DoAssignProjectForUser");
+            this._mediator.Notify(this,
+                Interactions.DoAssignProjectForUser,
+                userName,
+                projectName);
         }
 
-        public void AssignProjectLeader()
+        public void DoAssignProjectLeader(
+            string userName,
+            string projectName)
         {
-            this._mediator.Notify(this, "DoAssignProjectLeader");
+            this._mediator.Notify(this,
+                Interactions.DoAssignProjectLeader,
+                userName,
+                projectName);
         }
     }
 }

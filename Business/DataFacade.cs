@@ -19,7 +19,10 @@ namespace Business
             _dataList = new DataLists();
         }
 
-        public string AddNewUserData(string userName, string password, Enums.AccessRoles role)
+        public string AddNewUserData(
+            string userName, 
+            string password, 
+            Enums.AccessRoles? role)
         {
             User? user = new User(userName, password, role);
 
@@ -30,7 +33,7 @@ namespace Business
             return userData.User.Id;
         }
 
-        public void DeleteUserData(string userId)
+        public void DeleteUserDataById(string userId)
         {
             foreach (var user in _dataList.UserDataList)
             {
@@ -53,7 +56,7 @@ namespace Business
             return projectData.Project.Id;
         }
 
-        public void DeleteProjectData(string projectId)
+        public void DeleteProjectDataById(string projectId)
         {
             foreach (var project in _dataList.ProjectDataList)
             {

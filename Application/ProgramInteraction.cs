@@ -9,9 +9,9 @@ namespace Application;
 
 public class ProgramInteraction
 {
-    
-    private static UserData NowUserData { get; set; }
-    private static ProjectData nowProjectData { get; set; }
+
+    private static UserData NowUserData;
+    private static ProjectData nowProjectData;
 
 
     public static readonly DataFacade _dataFacade = new DataFacade();
@@ -85,7 +85,7 @@ public class ProgramInteraction
                 role = Enums.AccessRoles.User;
                 break;
         }
-        _adminBusinessObject.CreateUserData();
+        _adminBusinessObject.DoCreateUserData(userName, password, role);
         return true;
     }
 
@@ -94,7 +94,7 @@ public class ProgramInteraction
         Console.Write("Enter project name: ");
         string projectName = Console.ReadLine();
 
-        _adminBusinessObject.CreateProjectData();
+        _adminBusinessObject.DoCreateProjectData(projectName);
 
         return true;
     }

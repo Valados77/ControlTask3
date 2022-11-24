@@ -13,8 +13,8 @@ namespace Mediator.Components
         {
             _userData = userData;
             _projectData = projectData;
-            _userData.IsActiveChanged += DisplayMessage;
-            _projectData.IsActiveChanged += DisplayMessage;
+            //_userData.IsActiveChanged += DisplayMessage;
+            //_projectData.IsActiveChanged += DisplayMessage;
         }
 
         public void Dispose()

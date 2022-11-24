@@ -2,6 +2,7 @@
 using Business;
 using Business.BusinessObjects;
 using DataContracts;
+using Business.Mediator;
 
 namespace Mediator;
 
@@ -32,84 +33,71 @@ public class ConcreteMediator : IMediator
         _userBusinessObject.SetMediator(this);
     }
 
-    public void Notify(object sender, string ev)
+    public void Notify(object sender,
+        Interactions interaction, 
+        string? name = null,
+        string? password = null,
+        Enums.AccessRoles? role = null)
     {
-        string? name;
-        switch (ev)
+        switch (interaction)
         {
-            case "DoLoginUser":
-                _dataFacade.LoginUserData("test", "test");
+            case Interactions.DoLoginUser:
+                _dataFacade.LoginUserData(name, password);
                 break;
-            case "DoLogoutUser":
+            case Interactions.DoLogoutUser:
                 _dataFacade.LogoutUserData();
                 break;
-            case "DoReturnAllProjectForUser":
+            case Interactions.DoReturnAllProjectForUser:
                 _dataFacade.ReturnAllProject();
                 break;
-            case "DoReturnSubmitDateTime":
-                Console.WriteLine("Input project name: ");
-                name = Console.ReadLine();
-                if (name != null)
-                {
-                    var submitDateTime =
-                        _dataFacade.ReturnSubmitDateTime(_dataFacade.ReturnProjectDataByName(name));
-                }
-
+            case Interactions.DoReturnSubmitDateTime:
+                var submitDateTime =
+                        _dataFacade.ReturnSubmitDateTime(
+                            _dataFacade.ReturnProjectDataByName(name));
                 break;
-            case "DoSetViewingDateTime":
-                Console.WriteLine("Input project name: ");
-                name = Console.ReadLine();
-                if (name != null)
-                {
-                    _dataFacade.SetViewingDateTime(_dataFacade.ReturnProjectDataByName(name));
-                }
+            case Interactions.DoSetViewingDateTime:
+                _dataFacade.SetViewingDateTime(
+                    _dataFacade.ReturnProjectDataByName(name));
                 break;
-            case "DoReturnMaxHoursPerMonth":
-                Console.WriteLine("Input project name: ");
-                name = Console.ReadLine();
-                if (name != null)
-                {
-                    _dataFacade.ReturnMaxHoursPerMonth(_dataFacade.ReturnProjectDataByName(name));
-                }
+            case Interactions.DoReturnMaxHoursPerMonth:
+                _dataFacade.ReturnMaxHoursPerMonth(
+                    _dataFacade.ReturnProjectDataByName(name));
                 break;
-            case "DoSetMaxHoursPerMonth":
-                Console.WriteLine("Input project name: ");
-                name = Console.ReadLine();
-                Console.WriteLine("Input max hours");
-                var hours = 0;
-                int.TryParse(Console.ReadLine(), out hours); 
-                if (name != null)
-                {
-                    _dataFacade.SetMaxHoursPerMonth(_dataFacade.ReturnProjectDataByName(name), hours);
-                }
+            case Interactions.DoSetMaxHoursPerMonth: 
+                var hours = int.Parse(password);
+                _dataFacade.SetMaxHoursPerMonth(
+                    _dataFacade.ReturnProjectDataByName(name),
+                    hours);
                 break;
-            case "DoCreateUserData":
-                _dataFacade.AddNewUserData("test", "test", Enums.AccessRoles.User);
+            case Interactions.DoCreateUserData:
+                _dataFacade.AddNewUserData(name, password, role);
                 break;
-            case "DoCreateProjectData":
-                _dataFacade.AddNewProjectData("test");
+            case Interactions.DoCreateProjectData:
+                _dataFacade.AddNewProjectData(name);
                 break;
-            case "DoReadUserData":
-                _dataFacade.ReturnUserDataById("0001U");
+            case Interactions.DoReadUserDataById: //id = name
+                _dataFacade.ReturnUserDataById(name);
                 break;
-            case "DoReadProjectData":
-                _dataFacade.ReturnProjectDataById("0001P");
+            case Interactions.DoReadProjectDataById: //id = name
+                _dataFacade.ReturnProjectDataById(name);
                 break;
-            case "DoDeleteUserData":
-                _dataFacade.DeleteUserData("0001U");
+            case Interactions.DoDeleteUserDataById: //id = name
+                _dataFacade.DeleteUserDataById(name);
                 break;
-            case "DoDeleteProjectData":
-                _dataFacade.DeleteProjectData("0001P");
+            case Interactions.DoDeleteProjectDataById: //id = name
+                _dataFacade.DeleteProjectDataById(name);
                 break;
-            case "DoAssignProjectForUser":
+            case Interactions.DoAssignProjectForUser:
+                //userName = name, projectName = password
                 _dataFacade.AssignProjectForUser(
-                    _dataFacade.ReturnUserDataByName("test"),
-                    _dataFacade.ReturnProjectDataByName("test"));
+                    _dataFacade.ReturnUserDataByName(name),
+                    _dataFacade.ReturnProjectDataByName(password));
                 break;
-            case "DoAssignProjectLeader":
+            case Interactions.DoAssignProjectLeader:
+                //userName = name, projectName = password
                 _dataFacade.AssignProjectLeader(
-                    _dataFacade.ReturnUserDataByName("test"), 
-                    _dataFacade.ReturnProjectDataByName("test"));
+                    _dataFacade.ReturnUserDataByName(name), 
+                    _dataFacade.ReturnProjectDataByName(password));
                 break;
         }
     }

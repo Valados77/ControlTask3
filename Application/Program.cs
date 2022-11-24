@@ -21,7 +21,11 @@ internal class Program : ProgramInteraction
 
         ProgramInteraction.Print(_dataFacade.ReturnAllUser());
 
-        _userBusinessObject.DoLoginUser();
+        Console.WriteLine("Enter login name");
+        string loginName = Console.ReadLine();
+        Console.WriteLine("Enter login password");
+        string loginPassword = Console.ReadLine();
+        _userBusinessObject.DoLoginUser(loginName, loginPassword);
         ////---------------------------------------
     }
 }

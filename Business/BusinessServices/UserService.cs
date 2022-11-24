@@ -9,26 +9,26 @@ namespace Business.BusinessServices
         public List<UserData> GetAllActiveUser(List<UserData> userList)
         {
             var activeUsers =
-                userList.Where(p => p.User.IsActive == true);
+                userList.Where(p => p.User is { IsActive: true });
 
             return activeUsers.ToList();
         }
 
         public List<UserData> GetAllLeader(List<UserData> userList)
         {
-            var Leaders =
-                userList.Where(p => p.User.AccessRole == Enums.AccessRoles.Leader);
+            var leaders =
+                userList.Where(p => p.User is { AccessRole: Enums.AccessRoles.Leader });
 
-            return Leaders.ToList();
+            return leaders.ToList();
         }
 
         public List<UserData> GetAllActiveUsersFromSomeTime(List<UserData> userList, int time)
         {
-            var Leaders =
-                userList.Where(p => p.User.AccessRole == Enums.AccessRoles.Leader &&
+            var leaders =
+                userList.Where(p => p.User is { AccessRole: Enums.AccessRoles.Leader } &&
                                     p.SumOfSubmittedTime >= time);
 
-            return Leaders.ToList();
+            return leaders.ToList();
         }
     }
 }

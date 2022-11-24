@@ -38,16 +38,7 @@ namespace Repositories.Xml.Repositories
 
         public Project? Get(string id)
         {
-            foreach (var project in _objectLists.ProjectDataList)
-            {
-                if (project.Id == id)
-                {
-                    var newProject = project;
-                    return newProject;
-                }
-            }
-
-            return null;
+            return _objectLists.ProjectDataList.FirstOrDefault(p => p.Id == id);
         }
     }
 }
