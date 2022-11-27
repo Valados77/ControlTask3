@@ -21,14 +21,7 @@ public class UserRepository : IUserRepository
 
     public void Delete(string id)
     {
-        foreach (var user in _objectLists.UserDataList)
-        {
-            if (user.Id == id)
-            {
-                _objectLists.UserDataList.Remove(user);
-                return;
-            }
-        }
+        _objectLists.UserDataList.RemoveAll(u => u.Id == id);
     }
 
     public IEnumerable<User?> GetAll()
@@ -38,15 +31,6 @@ public class UserRepository : IUserRepository
 
     public User? Get(string id)
     {
-        foreach (var user in _objectLists.UserDataList)
-        {
-            if (user.Id == id)
-            {
-                var newUser = user;
-                return newUser;
-            }
-        }
-
-        return null;
+        return _objectLists.UserDataList.FirstOrDefault(u => u.Id == id);
     }
 }

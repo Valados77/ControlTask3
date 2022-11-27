@@ -20,11 +20,11 @@ namespace Business
         }
 
         public string AddNewUserData(
-            string userName, 
-            string password, 
-            Enums.AccessRoles? role)
+            string userName,
+            string password,
+            Enums.AccessRoles role)
         {
-            User? user = new User(userName, password, role);
+            var user = new User(userName, password, role);
 
             UserData userData = new UserData(user);
             userData.IsActiveChanged += DisplayMessage;
@@ -35,14 +35,7 @@ namespace Business
 
         public void DeleteUserDataById(string userId)
         {
-            foreach (var user in _dataList.UserDataList)
-            {
-                if (user.User!.Id == userId)
-                {
-                    _dataList.UserDataList.Remove(user);
-                    return;
-                }
-            }
+            _dataList.UserDataList.RemoveAll(u => u.User.Id == userId);
         }
 
         public string AddNewProjectData(string projectName)
@@ -58,25 +51,17 @@ namespace Business
 
         public void DeleteProjectDataById(string projectId)
         {
-            foreach (var project in _dataList.ProjectDataList)
-            {
-                if (project.Project!.Id == projectId)
-                {
-                    _dataList.ProjectDataList.Remove(project);
-                    return;
-                }
-            }
+            _dataList.ProjectDataList.RemoveAll(p => p.Project.Id == projectId);
         }
 
         public UserData? LoginUserData(string userName, string password)
         {
-            UserData? userData = ReturnUserDataByName(userName);
-            if (userData != null)
+            var userData = GetUserDataByName(userName);
+            if (userData != null && PasswordVerification(userData, password))
             {
-                if (PasswordVerification(userData, password) == true)
-                {
-                    return userData;
-                }
+
+                return userData;
+
             }
             return null;
         }
@@ -86,25 +71,22 @@ namespace Business
             return null;
         }
 
-        public List<UserData> ReturnAllUser()
+        public List<UserData> GetAllUser()
         {
             return _dataList.UserDataList;
         }
 
-        public List<UserData> ReturnAllActiveUser()
+        public List<UserData> GetAllActiveUser()
         {
-            List<UserData> activeUsers = _userService.GetAllActiveUser(_dataList.UserDataList);
-            return activeUsers;
+            return _userService.GetAllActiveUser(_dataList.UserDataList);
         }
 
-        public List<UserData> ReturnAllLeader()
+        public List<UserData> GetAllLeader()
         {
-            List<UserData> leaderUsers =
-                _userService.GetAllLeader(_dataList.UserDataList);
-            return leaderUsers;
+            return _userService.GetAllLeader(_dataList.UserDataList);
         }
 
-        public List<UserData> ReturnAllActiveUsersFromSomeTime()
+        public List<UserData> GetAllActiveUsersFromSomeTime()
         {
             Console.Write("Enter the minimum working time: ");
             int minTime;
@@ -117,8 +99,8 @@ namespace Business
                 Console.Write("An exception was thrown: ");
                 minTime = 0;
             }
-            List<UserData> leaderUsers = _userService.GetAllActiveUsersFromSomeTime(_dataList.UserDataList, minTime);
-            return leaderUsers;
+
+            return _userService.GetAllActiveUsersFromSomeTime(_dataList.UserDataList, minTime);
         }
 
         public void AssignProjectForUser(UserData userData, ProjectData projectData)
@@ -126,55 +108,32 @@ namespace Business
             userData.User!.ProjectIdForUser = projectData.Project!.Id;
         }
 
-        public UserData? ReturnUserDataByName(string userName)
+        public UserData? GetUserDataByName(string userName)
         {
-            foreach (var i in _dataList.UserDataList)
-            {
-                if (i.User!.Username == userName)
-                {
-                    return i;
-                }
-            }
-
-            return null;
+            return _dataList.UserDataList.Find(u => u.User.Username == userName);
         }
 
-        public UserData? ReturnUserDataById(string userId)
+        public UserData? GetUserDataById(string userId)
         {
-            foreach (var i in _dataList.UserDataList)
-            {
-                if (i.User!.Id == userId)
-                {
-                    return i;
-                }
-            }
-
-            return null;
+            return _dataList.UserDataList.Find(u => u.User!.Id == userId);
         }
 
-        public bool PasswordVerification(UserData? userData, string password)
+        public bool PasswordVerification(UserData userData, string password)
         {
-            if (userData.User.Password == password)
-            {
-                return true;
-            }
-
-            return false;
+            return userData.User!.Password == password;
         }
 
-        public List<ProjectData> ReturnAllProject()
+        public List<ProjectData> GetAllProject()
         {
             return _dataList.ProjectDataList;
         }
 
-        public List<ProjectData> ReturnAllExpiredProjects()
+        public List<ProjectData> GetAllExpiredProjects()
         {
-            List<ProjectData> expiredProjects =
-                _projectService.GetAllExpiredProjects(_dataList.ProjectDataList);
-            return expiredProjects;
+            return _projectService.GetAllExpiredProjects(_dataList.ProjectDataList);
         }
 
-        public List<ProjectData> ReturnAllProjectsWihMoreEmployees()
+        public List<ProjectData> GetAllProjectsWihMoreEmployees()
         {
             int minEmploys;
             try
@@ -186,35 +145,18 @@ namespace Business
                 Console.Write("An exception was thrown: ");
                 minEmploys = 0;
             }
-            List<ProjectData> Projects =
-                _projectService.GetAllProjectsWihMoreEmployees(_dataList.ProjectDataList, minEmploys);
-            return Projects;
+
+            return _projectService.GetAllProjectsWihMoreEmployees(_dataList.ProjectDataList, minEmploys);
         }
 
-        public ProjectData? ReturnProjectDataById(string projectId)
+        public ProjectData? GetProjectDataById(string projectId)
         {
-            foreach (var i in _dataList.ProjectDataList)
-            {
-                if (i.Project!.Id == projectId)
-                {
-                    return i;
-                }
-            }
-
-            return null;
+            return _dataList.ProjectDataList.Find(p => p.Project.Id == projectId);
         }
 
-        public ProjectData? ReturnProjectDataByName(string? projectName)
+        public ProjectData? GetProjectDataByName(string? projectName)
         {
-            foreach (var i in _dataList.ProjectDataList)
-            {
-                if (i.Project!.Name == projectName)
-                {
-                    return i;
-                }
-            }
-
-            return null;
+            return _dataList.ProjectDataList.Find(p => p.Project.Name == projectName);
         }
 
         public void AssignProjectLeader(UserData userData, ProjectData projectData)
@@ -222,7 +164,7 @@ namespace Business
             projectData.Project!.LeaderUserId = userData.User!.Id;
         }
 
-        public DateTime ReturnSubmitDateTime(ProjectData? projectData)
+        public DateTime GetSubmitDateTime(ProjectData? projectData)
         {
             return projectData.Project!.SubmitDateTime;
         }
@@ -237,7 +179,7 @@ namespace Business
             projectData!.Project!.MaxHoursPerMonth = hours;
         }
 
-        public int ReturnMaxHoursPerMonth(ProjectData? projectData)
+        public int GetMaxHoursPerMonth(ProjectData? projectData)
         {
             return projectData.Project!.MaxHoursPerMonth;
         }

@@ -4,10 +4,10 @@ public enum Interactions
 {
     DoLoginUser,
     DoLogoutUser,
-    DoReturnAllProjectForUser,
-    DoReturnSubmitDateTime,
+    DoGetAllProjectForUser,
+    DoGetSubmitDateTime,
     DoSetViewingDateTime,
-    DoReturnMaxHoursPerMonth,
+    DoGetMaxHoursPerMonth,
     DoSetMaxHoursPerMonth,
     DoCreateUserData,
     DoCreateProjectData,

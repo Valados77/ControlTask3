@@ -22,22 +22,17 @@ public class ConcreteMediator : IMediator
         UserBusinessObject userBusinessObject)
     {
         _dataFacade = dataFacade;
-        _dataFacade.SetMediator(this);
         _subscribeTo = subscribeTo;
-        _subscribeTo.SetMediator(this);
         _adminBusinessObject = adminBusinessObject;
-        _adminBusinessObject.SetMediator(this);
         _leaderBusinessObject = leaderBusinessObject;
-        _leaderBusinessObject.SetMediator(this);
         _userBusinessObject = userBusinessObject;
-        _userBusinessObject.SetMediator(this);
     }
 
-    public void Notify(object sender,
+    public void Notify(
         Interactions interaction, 
         string? name = null,
         string? password = null,
-        Enums.AccessRoles? role = null)
+        Enums.AccessRoles role = Enums.AccessRoles.User)
     {
         switch (interaction)
         {
@@ -47,26 +42,26 @@ public class ConcreteMediator : IMediator
             case Interactions.DoLogoutUser:
                 _dataFacade.LogoutUserData();
                 break;
-            case Interactions.DoReturnAllProjectForUser:
-                _dataFacade.ReturnAllProject();
+            case Interactions.DoGetAllProjectForUser:
+                _dataFacade.GetAllProject();
                 break;
-            case Interactions.DoReturnSubmitDateTime:
+            case Interactions.DoGetSubmitDateTime:
                 var submitDateTime =
-                        _dataFacade.ReturnSubmitDateTime(
-                            _dataFacade.ReturnProjectDataByName(name));
+                        _dataFacade.GetSubmitDateTime(
+                            _dataFacade.GetProjectDataByName(name));
                 break;
             case Interactions.DoSetViewingDateTime:
                 _dataFacade.SetViewingDateTime(
-                    _dataFacade.ReturnProjectDataByName(name));
+                    _dataFacade.GetProjectDataByName(name));
                 break;
-            case Interactions.DoReturnMaxHoursPerMonth:
-                _dataFacade.ReturnMaxHoursPerMonth(
-                    _dataFacade.ReturnProjectDataByName(name));
+            case Interactions.DoGetMaxHoursPerMonth:
+                _dataFacade.GetMaxHoursPerMonth(
+                    _dataFacade.GetProjectDataByName(name));
                 break;
             case Interactions.DoSetMaxHoursPerMonth: 
                 var hours = int.Parse(password);
                 _dataFacade.SetMaxHoursPerMonth(
-                    _dataFacade.ReturnProjectDataByName(name),
+                    _dataFacade.GetProjectDataByName(name),
                     hours);
                 break;
             case Interactions.DoCreateUserData:
@@ -76,10 +71,10 @@ public class ConcreteMediator : IMediator
                 _dataFacade.AddNewProjectData(name);
                 break;
             case Interactions.DoReadUserDataById: //id = name
-                _dataFacade.ReturnUserDataById(name);
+                _dataFacade.GetUserDataById(name);
                 break;
             case Interactions.DoReadProjectDataById: //id = name
-                _dataFacade.ReturnProjectDataById(name);
+                _dataFacade.GetProjectDataById(name);
                 break;
             case Interactions.DoDeleteUserDataById: //id = name
                 _dataFacade.DeleteUserDataById(name);
@@ -90,14 +85,14 @@ public class ConcreteMediator : IMediator
             case Interactions.DoAssignProjectForUser:
                 //userName = name, projectName = password
                 _dataFacade.AssignProjectForUser(
-                    _dataFacade.ReturnUserDataByName(name),
-                    _dataFacade.ReturnProjectDataByName(password));
+                    _dataFacade.GetUserDataByName(name),
+                    _dataFacade.GetProjectDataByName(password));
                 break;
             case Interactions.DoAssignProjectLeader:
                 //userName = name, projectName = password
                 _dataFacade.AssignProjectLeader(
-                    _dataFacade.ReturnUserDataByName(name), 
-                    _dataFacade.ReturnProjectDataByName(password));
+                    _dataFacade.GetUserDataByName(name), 
+                    _dataFacade.GetProjectDataByName(password));
                 break;
         }
     }

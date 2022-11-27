@@ -17,9 +17,9 @@ internal class Program : ProgramInteraction
             Console.WriteLine("Enter \"reg\" to register new user");
         }
 
-        //Print(DataFacadeInteraction.ReturnAllActiveUser());
+        //Print(DataFacadeInteraction.GetAllActiveUser());
 
-        ProgramInteraction.Print(_dataFacade.ReturnAllUser());
+        ProgramInteraction.Print(_dataFacade.GetAllUser());
 
         Console.WriteLine("Enter login name");
         string loginName = Console.ReadLine();

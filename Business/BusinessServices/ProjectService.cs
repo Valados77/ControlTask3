@@ -5,12 +5,12 @@ namespace Business.BusinessServices
 {
     public class ProjectService
     {
-        public List<ProjectData> GetAllExpiredProjects(List<ProjectData> ProjectList)
+        public List<ProjectData> GetAllExpiredProjects(List<ProjectData> projectList)
         {
-            var ExpiredProjects =
-                ProjectList.Where(p => p.Project.ExpirationDate >= DateTime.Now);
+            var expiredProjects =
+                projectList.Where(p => p.Project.ExpirationDate >= DateTime.Now);
 
-            return ExpiredProjects.ToList();
+            return expiredProjects.ToList();
         }
 
         public List<ProjectData> GetAllProjectsWihMoreEmployees(List<ProjectData> projectsList, int quantity)

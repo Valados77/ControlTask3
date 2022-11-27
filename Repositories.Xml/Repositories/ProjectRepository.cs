@@ -21,14 +21,7 @@ namespace Repositories.Xml.Repositories
 
         public void Delete(string id)
         {
-            foreach (var project in _objectLists.ProjectDataList)
-            {
-                if (project.Id == id)
-                {
-                    _objectLists.ProjectDataList.Remove(project);
-                    return;
-                }
-            }
+            _objectLists.ProjectDataList.RemoveAll(p => p.Id == id);
         }
 
         public IEnumerable<Project?> GetAll() //TEST

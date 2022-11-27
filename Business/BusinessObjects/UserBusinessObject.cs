@@ -8,26 +8,33 @@ public class UserBusinessObject : BaseComponent
 {
     public void DoLoginUser(string name, string password)
     {
-        this._mediator.Notify(this, Interactions.DoLoginUser, name, password);
+        this._mediator.Notify(
+            Interactions.DoLoginUser, 
+            name, password);
     }
 
     public void DoLogoutUser()
     {
-        this._mediator.Notify(this, Interactions.DoLogoutUser);
+        this._mediator.Notify( 
+            Interactions.DoLogoutUser);
     }
 
-    public void DoReturnAllProjectForUser()
+    public void DoGetAllProjectForUser()
     {
-        this._mediator.Notify(this, Interactions.DoReturnAllProjectForUser);
+        this._mediator.Notify(
+            Interactions.DoGetAllProjectForUser);
     }
 
-    public void DoReturnSubmitDateTime(string name)
+    public void DoGetSubmitDateTime(string name)
     {
-        this._mediator.Notify(this, Interactions.DoReturnSubmitDateTime, name);
+        this._mediator.Notify(
+            Interactions.DoGetSubmitDateTime,
+            name);
     }
 
     public void DoSetViewingDateTime(string name)
     {
-        this._mediator.Notify(this, Interactions.DoSetViewingDateTime, name);
+        this._mediator.Notify( Interactions.DoSetViewingDateTime,
+            name);
     }
 }

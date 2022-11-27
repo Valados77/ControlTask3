@@ -6,16 +6,16 @@ namespace Business.BusinessObjects
 {
     public class LeaderBusinessObject : UserBusinessObject
     {
-        public void DoReturnMaxHoursPerMonth(string name)
+        public void DoGetMaxHoursPerMonth(string name)
         {
-            this._mediator.Notify(this,
-                Interactions.DoReturnMaxHoursPerMonth,
+            this._mediator.Notify(
+                Interactions.DoGetMaxHoursPerMonth,
                 name);
         }
 
         public void DoSetMaxHoursPerMonth(string name, string hours)
         {
-            this._mediator.Notify(this,
+            this._mediator.Notify(
                 Interactions.DoSetMaxHoursPerMonth,
                 name,
                 hours);
