@@ -26,32 +26,32 @@ namespace Business
         {
             var user = new User(userName, password, role);
 
-            UserData userData = new UserData(user);
+            var userData = new UserData(user);
             userData.IsActiveChanged += DisplayMessage;
             _dataList.UserDataList.Add(userData);
 
-            return userData.User.Id;
+            return userData.User!.Id;
         }
 
         public void DeleteUserDataById(string userId)
         {
-            _dataList.UserDataList.RemoveAll(u => u.User.Id == userId);
+            _dataList.UserDataList.RemoveAll(u => u.User!.Id == userId);
         }
 
         public string AddNewProjectData(string projectName)
         {
-            Project project = new Project(projectName);
+            var project = new Project(projectName);
 
-            ProjectData projectData = new ProjectData(project);
+            var projectData = new ProjectData(project);
             projectData.IsActiveChanged += DisplayMessage;
             _dataList.ProjectDataList.Add(projectData);
 
-            return projectData.Project.Id;
+            return projectData.Project!.Id;
         }
 
         public void DeleteProjectDataById(string projectId)
         {
-            _dataList.ProjectDataList.RemoveAll(p => p.Project.Id == projectId);
+            _dataList.ProjectDataList.RemoveAll(p => p.Project!.Id == projectId);
         }
 
         public UserData? LoginUserData(string userName, string password)
@@ -92,7 +92,7 @@ namespace Business
             int minTime;
             try
             {
-                minTime = int.Parse(Console.ReadLine());
+                minTime = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             }
             catch
             {
@@ -110,7 +110,7 @@ namespace Business
 
         public UserData? GetUserDataByName(string userName)
         {
-            return _dataList.UserDataList.Find(u => u.User.Username == userName);
+            return _dataList.UserDataList.Find(u => u.User!.Username == userName);
         }
 
         public UserData? GetUserDataById(string userId)
@@ -138,7 +138,7 @@ namespace Business
             int minEmploys;
             try
             {
-                minEmploys = int.Parse(Console.ReadLine());
+                minEmploys = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             }
             catch
             {
@@ -151,12 +151,12 @@ namespace Business
 
         public ProjectData? GetProjectDataById(string projectId)
         {
-            return _dataList.ProjectDataList.Find(p => p.Project.Id == projectId);
+            return _dataList.ProjectDataList.Find(p => p.Project!.Id == projectId);
         }
 
         public ProjectData? GetProjectDataByName(string? projectName)
         {
-            return _dataList.ProjectDataList.Find(p => p.Project.Name == projectName);
+            return _dataList.ProjectDataList.Find(p => p.Project!.Name == projectName);
         }
 
         public void AssignProjectLeader(UserData userData, ProjectData projectData)
@@ -164,22 +164,22 @@ namespace Business
             projectData.Project!.LeaderUserId = userData.User!.Id;
         }
 
-        public DateTime GetSubmitDateTime(ProjectData? projectData)
+        public DateTime GetSubmitDateTime(ProjectData projectData)
         {
             return projectData.Project!.SubmitDateTime;
         }
 
-        public void SetViewingDateTime(ProjectData? projectData)
+        public void SetViewingDateTime(ProjectData projectData)
         {
-            projectData.Project.ViewingDateTime.Add(DateTime.Now);
+            projectData.Project!.ViewingDateTime.Add(DateTime.Now);
         }
 
-        public void SetMaxHoursPerMonth(ProjectData? projectData, int hours)
+        public void SetMaxHoursPerMonth(ProjectData projectData, int hours)
         {
             projectData!.Project!.MaxHoursPerMonth = hours;
         }
 
-        public int GetMaxHoursPerMonth(ProjectData? projectData)
+        public int GetMaxHoursPerMonth(ProjectData projectData)
         {
             return projectData.Project!.MaxHoursPerMonth;
         }
