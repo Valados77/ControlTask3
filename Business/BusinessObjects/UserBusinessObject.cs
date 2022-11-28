@@ -1,40 +1,39 @@
-﻿using Business;
-using Business.Mediator;
-using Mediator.Components;
+﻿using Business.Mediator;
 
 namespace Business.BusinessObjects;
 
 public class UserBusinessObject : BaseComponent
 {
-    public void DoLoginUser(string name, string password)
+    public UserData? DoLoginUser(string? name, string? password)
     {
-        this._mediator.Notify(
+        return (UserData)Mediator.Notify(this,
             Interactions.DoLoginUser, 
-            name, password);
+            name, password)!;
     }
 
-    public void DoLogoutUser()
+    public UserData? DoLogoutUser()
     {
-        this._mediator.Notify( 
-            Interactions.DoLogoutUser);
+        return (UserData)Mediator.Notify(this,
+            Interactions.DoLogoutUser)!;
     }
 
-    public void DoGetAllProjectForUser()
+    public List<ProjectData> DoGetAllProjectForUser()
     {
-        this._mediator.Notify(
-            Interactions.DoGetAllProjectForUser);
+        return (List<ProjectData>)Mediator.Notify(this,
+            Interactions.DoGetAllProjectForUser)!;
     }
 
-    public void DoGetSubmitDateTime(string name)
+    public DateTime DoGetSubmitDateTime(string name)
     {
-        this._mediator.Notify(
+        return (DateTime)Mediator.Notify(this,
             Interactions.DoGetSubmitDateTime,
-            name);
+            name)!;
     }
 
-    public void DoSetViewingDateTime(string name)
+    public string DoSetViewingDateTime(string name)
     {
-        this._mediator.Notify( Interactions.DoSetViewingDateTime,
-            name);
+        return (string)Mediator.Notify(this,
+            Interactions.DoSetViewingDateTime,
+            name)!;
     }
 }

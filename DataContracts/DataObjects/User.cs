@@ -31,14 +31,5 @@
             Password = password;
             FullName = fullName;
         }
-
-        public override void Print()
-        {
-            Console.WriteLine($"ID: {Id}\t" +
-                              $"Username: {Username}\t" +
-                              $"Full name: {FullName}\t" +
-                              $"Is active: {IsActive}\t" +
-                              $"Access role: {AccessRole}");
-        }
     }
 }

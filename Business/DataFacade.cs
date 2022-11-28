@@ -1,8 +1,8 @@
 ﻿using Business.BusinessObjects;
 using Business.BusinessServices;
+using Business.Mediator;
 using DataContracts;
 using DataContracts.DataObjects;
-using Mediator.Components;
 
 namespace Business
 {
@@ -33,9 +33,14 @@ namespace Business
             return userData.User!.Id;
         }
 
-        public void DeleteUserDataById(string userId)
+        public bool DeleteUserDataById(string? userId)
         {
+            if (userId == null)
+            {
+                return false;
+            }
             _dataList.UserDataList.RemoveAll(u => u.User!.Id == userId);
+            return true;
         }
 
         public string AddNewProjectData(string projectName)
@@ -49,12 +54,17 @@ namespace Business
             return projectData.Project!.Id;
         }
 
-        public void DeleteProjectDataById(string projectId)
+        public bool DeleteProjectDataById(string? projectId)
         {
+            if (projectId == null)
+            {
+                return false;
+            }
             _dataList.ProjectDataList.RemoveAll(p => p.Project!.Id == projectId);
+            return true;
         }
 
-        public UserData? LoginUserData(string userName, string password)
+        public UserData? LoginUserData(string? userName, string? password)
         {
             var userData = GetUserDataByName(userName);
             if (userData != null && PasswordVerification(userData, password))
@@ -86,39 +96,28 @@ namespace Business
             return _userService.GetAllLeader(_dataList.UserDataList);
         }
 
-        public List<UserData> GetAllActiveUsersFromSomeTime()
+        public List<UserData> GetAllActiveUsersFromSomeTime(int minTime)
         {
-            Console.Write("Enter the minimum working time: ");
-            int minTime;
-            try
-            {
-                minTime = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            }
-            catch
-            {
-                Console.Write("An exception was thrown: ");
-                minTime = 0;
-            }
-
             return _userService.GetAllActiveUsersFromSomeTime(_dataList.UserDataList, minTime);
         }
 
-        public void AssignProjectForUser(UserData userData, ProjectData projectData)
+        public string AssignProjectForUser(UserData userData, ProjectData projectData)
         {
             userData.User!.ProjectIdForUser = projectData.Project!.Id;
+            return projectData.Project!.Id;
         }
 
-        public UserData? GetUserDataByName(string userName)
+        public UserData? GetUserDataByName(string? userName)
         {
             return _dataList.UserDataList.Find(u => u.User!.Username == userName);
         }
 
-        public UserData? GetUserDataById(string userId)
+        public UserData? GetUserDataById(string? userId)
         {
             return _dataList.UserDataList.Find(u => u.User!.Id == userId);
         }
 
-        public bool PasswordVerification(UserData userData, string password)
+        public bool PasswordVerification(UserData userData, string? password)
         {
             return userData.User!.Password == password;
         }
@@ -133,23 +132,12 @@ namespace Business
             return _projectService.GetAllExpiredProjects(_dataList.ProjectDataList);
         }
 
-        public List<ProjectData> GetAllProjectsWihMoreEmployees()
+        public List<ProjectData> GetAllProjectsWihMoreEmployees(int minEmploys)
         {
-            int minEmploys;
-            try
-            {
-                minEmploys = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            }
-            catch
-            {
-                Console.Write("An exception was thrown: ");
-                minEmploys = 0;
-            }
-
             return _projectService.GetAllProjectsWihMoreEmployees(_dataList.ProjectDataList, minEmploys);
         }
 
-        public ProjectData? GetProjectDataById(string projectId)
+        public ProjectData? GetProjectDataById(string? projectId)
         {
             return _dataList.ProjectDataList.Find(p => p.Project!.Id == projectId);
         }
@@ -159,9 +147,10 @@ namespace Business
             return _dataList.ProjectDataList.Find(p => p.Project!.Name == projectName);
         }
 
-        public void AssignProjectLeader(UserData userData, ProjectData projectData)
+        public string AssignProjectLeader(UserData userData, ProjectData projectData)
         {
             projectData.Project!.LeaderUserId = userData.User!.Id;
+            return userData.User!.Id;
         }
 
         public DateTime GetSubmitDateTime(ProjectData projectData)
@@ -169,14 +158,16 @@ namespace Business
             return projectData.Project!.SubmitDateTime;
         }
 
-        public void SetViewingDateTime(ProjectData projectData)
+        public string SetViewingDateTime(ProjectData projectData)
         {
             projectData.Project!.ViewingDateTime.Add(DateTime.Now);
+            return projectData.Project!.Id;
         }
 
-        public void SetMaxHoursPerMonth(ProjectData projectData, int hours)
+        public string SetMaxHoursPerMonth(ProjectData projectData, int hours)
         {
             projectData!.Project!.MaxHoursPerMonth = hours;
+            return projectData.Project.Id;
         }
 
         public int GetMaxHoursPerMonth(ProjectData projectData)

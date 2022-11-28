@@ -1,11 +1,10 @@
-﻿using Business.Mediator;
-using DataContracts;
+﻿using DataContracts;
 
-namespace Mediator;
+namespace Business.Mediator;
 
 public interface IMediator
 {
-    void Notify(
+    object? Notify(object sender,
         Interactions interaction, 
         string? name = null, 
         string? password = null, 

@@ -1,24 +1,21 @@
-﻿
-using Business.Mediator;
-using Mediator.Components;
+﻿using Business.Mediator;
 
 namespace Business.BusinessObjects
 {
     public class LeaderBusinessObject : UserBusinessObject
     {
-        public void DoGetMaxHoursPerMonth(string name)
+        public int DoGetMaxHoursPerMonth(string name)
         {
-            this._mediator.Notify(
+            return (int)Mediator.Notify(this,
                 Interactions.DoGetMaxHoursPerMonth,
-                name);
+                name)!;
         }
 
-        public void DoSetMaxHoursPerMonth(string name, string hours)
+        public string DoSetMaxHoursPerMonth(string name, string hours)
         {
-            this._mediator.Notify(
+            return (string)Mediator.Notify(this,
                 Interactions.DoSetMaxHoursPerMonth,
-                name,
-                hours);
+                name, hours)!;
         }
     }
 }

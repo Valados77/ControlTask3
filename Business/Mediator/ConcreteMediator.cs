@@ -1,18 +1,11 @@
-﻿using Mediator.Components;
-using Business;
-using Business.BusinessObjects;
+﻿using Business.BusinessObjects;
 using DataContracts;
-using Business.Mediator;
 
-namespace Mediator;
+namespace Business.Mediator;
 
 public class ConcreteMediator : IMediator
 {
     private readonly DataFacade _dataFacade;
-    private readonly SubscribeTo _subscribeTo;
-    private AdminBusinessObject _adminBusinessObject;
-    private LeaderBusinessObject _leaderBusinessObject;
-    private UserBusinessObject _userBusinessObject;
 
     public ConcreteMediator(
         DataFacade dataFacade,
@@ -22,14 +15,15 @@ public class ConcreteMediator : IMediator
         UserBusinessObject userBusinessObject)
     {
         _dataFacade = dataFacade;
-        _subscribeTo = subscribeTo;
-        _adminBusinessObject = adminBusinessObject;
-        _leaderBusinessObject = leaderBusinessObject;
-        _userBusinessObject = userBusinessObject;
+        _dataFacade.SetMediator(this);
+        subscribeTo.SetMediator(this);
+        adminBusinessObject.SetMediator(this);
+        leaderBusinessObject.SetMediator(this);
+        userBusinessObject.SetMediator(this);
     }
 
-    public void Notify(
-        Interactions interaction, 
+    public object? Notify(object sender,
+        Interactions interaction,
         string? name = null,
         string? password = null,
         Enums.AccessRoles role = Enums.AccessRoles.User)
@@ -37,63 +31,64 @@ public class ConcreteMediator : IMediator
         switch (interaction)
         {
             case Interactions.DoLoginUser:
-                _dataFacade.LoginUserData(name, password);
-                break;
+                return _dataFacade.LoginUserData(name, password);
+            // returns UserData
             case Interactions.DoLogoutUser:
-                _dataFacade.LogoutUserData();
-                break;
+                return _dataFacade.LogoutUserData();
+            // returns UserData
             case Interactions.DoGetAllProjectForUser:
-                _dataFacade.GetAllProject();
-                break;
+                return _dataFacade.GetAllProject();
+            // returns List<ProjectData>
             case Interactions.DoGetSubmitDateTime:
-                var submitDateTime =
-                        _dataFacade.GetSubmitDateTime(
-                            _dataFacade.GetProjectDataByName(name));
-                break;
+                return _dataFacade.GetSubmitDateTime(
+                            _dataFacade.GetProjectDataByName(name)!);
+            // returns DateTime
             case Interactions.DoSetViewingDateTime:
-                _dataFacade.SetViewingDateTime(
-                    _dataFacade.GetProjectDataByName(name));
-                break;
+                return _dataFacade.SetViewingDateTime(
+                     _dataFacade.GetProjectDataByName(name)!);
+            // returns string
             case Interactions.DoGetMaxHoursPerMonth:
-                _dataFacade.GetMaxHoursPerMonth(
-                    _dataFacade.GetProjectDataByName(name));
-                break;
-            case Interactions.DoSetMaxHoursPerMonth: 
-                var hours = int.Parse(password);
-                _dataFacade.SetMaxHoursPerMonth(
-                    _dataFacade.GetProjectDataByName(name),
-                    hours);
-                break;
+                return _dataFacade.GetMaxHoursPerMonth(
+                    _dataFacade.GetProjectDataByName(name)!);
+            // returns int
+            case Interactions.DoSetMaxHoursPerMonth:
+                int.TryParse(password, out var hours);
+                return _dataFacade.SetMaxHoursPerMonth(
+                        _dataFacade.GetProjectDataByName(name)!,
+                        hours);
+            // returns string
             case Interactions.DoCreateUserData:
-                _dataFacade.AddNewUserData(name, password, role);
-                break;
+                return _dataFacade.AddNewUserData(name!, password!, role);
+            // returns string
             case Interactions.DoCreateProjectData:
-                _dataFacade.AddNewProjectData(name);
-                break;
+                return _dataFacade.AddNewProjectData(name!);
+            // returns string
             case Interactions.DoReadUserDataById: //id = name
-                _dataFacade.GetUserDataById(name);
-                break;
+                return _dataFacade.GetUserDataById(name);
+            // returns UserData
             case Interactions.DoReadProjectDataById: //id = name
-                _dataFacade.GetProjectDataById(name);
-                break;
+                return _dataFacade.GetProjectDataById(name);
+            // returns ProjectData
             case Interactions.DoDeleteUserDataById: //id = name
-                _dataFacade.DeleteUserDataById(name);
-                break;
+                return _dataFacade.DeleteUserDataById(name);
+            // returns bool
             case Interactions.DoDeleteProjectDataById: //id = name
-                _dataFacade.DeleteProjectDataById(name);
-                break;
+                return _dataFacade.DeleteProjectDataById(name);
+            // returns bool
             case Interactions.DoAssignProjectForUser:
                 //userName = name, projectName = password
-                _dataFacade.AssignProjectForUser(
-                    _dataFacade.GetUserDataByName(name),
-                    _dataFacade.GetProjectDataByName(password));
-                break;
+                return _dataFacade.AssignProjectForUser(
+                    _dataFacade.GetUserDataByName(name)!,
+                    _dataFacade.GetProjectDataByName(password)!);
+            // returns string
             case Interactions.DoAssignProjectLeader:
                 //userName = name, projectName = password
-                _dataFacade.AssignProjectLeader(
-                    _dataFacade.GetUserDataByName(name), 
-                    _dataFacade.GetProjectDataByName(password));
-                break;
+                return _dataFacade.AssignProjectLeader(
+                    _dataFacade.GetUserDataByName(name)!,
+                    _dataFacade.GetProjectDataByName(password)!);
+                // returns string
+            default:
+                return null;
         }
     }
 }

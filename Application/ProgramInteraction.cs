@@ -1,30 +1,27 @@
 ﻿using Business;
 using Business.BusinessObjects;
+using Business.Mediator;
 using DataContracts;
-using DataContracts.DataObjects;
-using Mediator;
-using Mediator.Components;
 
 namespace Application;
 
 public class ProgramInteraction
 {
+    public static UserData? _nowUserData;
+    public static ProjectData? _nowProjectData;
 
-    private static UserData NowUserData;
-    private static ProjectData nowProjectData;
 
-
-    public static readonly DataFacade _dataFacade = new DataFacade();
-    public static readonly SubscribeTo _subscribeTo = new SubscribeTo(NowUserData, nowProjectData);
-    public static readonly AdminBusinessObject _adminBusinessObject = new AdminBusinessObject();
-    public static readonly LeaderBusinessObject _leaderBusinessObject = new LeaderBusinessObject();
-    public static readonly UserBusinessObject _userBusinessObject = new UserBusinessObject();
+    public static readonly DataFacade DataFacade = new DataFacade();
+    public static readonly SubscribeTo SubscribeTo = new SubscribeTo(_nowUserData, _nowProjectData);
+    public static readonly AdminBusinessObject AdminBusinessObject = new AdminBusinessObject();
+    public static readonly LeaderBusinessObject LeaderBusinessObject = new LeaderBusinessObject();
+    public static readonly UserBusinessObject UserBusinessObject = new UserBusinessObject();
     public static ConcreteMediator ConcreteMediatorInteraction = new ConcreteMediator(
-        _dataFacade,
-        _subscribeTo,
-        _adminBusinessObject,
-        _leaderBusinessObject,
-        _userBusinessObject);
+        DataFacade,
+        SubscribeTo,
+        AdminBusinessObject,
+        LeaderBusinessObject,
+        UserBusinessObject);
 
     public static void Menu()
     {
@@ -52,18 +49,18 @@ public class ProgramInteraction
         //---------------------------------------
     }
 
-    public static bool RegisterNewUser()
+    public static string RegisterNewUser()
     {
         Console.Write("Enter username: ");
-        string userName = Console.ReadLine();
+        var userName = Console.ReadLine();
         Console.Write("Enter password: ");
-        string password = Console.ReadLine();
+        var password = Console.ReadLine();
 
         Console.Write("Enter access role:\n" +
                       "0. Admin\n" +
                       "1. Leader\n" +
                       "2. User");
-        Enums.AccessRoles role = new Enums.AccessRoles();
+        var role = new Enums.AccessRoles();
         switch (Console.ReadLine())
         {
             case "0":
@@ -85,25 +82,22 @@ public class ProgramInteraction
                 role = Enums.AccessRoles.User;
                 break;
         }
-        _adminBusinessObject.DoCreateUserData(userName, password, role);
-        return true;
+        return AdminBusinessObject.DoCreateUserData(userName, password, role);
     }
 
-    public static bool NewProjectData()
+    public static void NewProjectData()
     {
         Console.Write("Enter project name: ");
-        string projectName = Console.ReadLine();
+        var projectName = Console.ReadLine();
 
-        _adminBusinessObject.DoCreateProjectData(projectName);
-
-        return true;
+        AdminBusinessObject.DoCreateProjectData(projectName);
     }
 
     public static void Print(List<UserData> userData)
     {
         foreach (var user in userData)
         {
-            Console.WriteLine("User: {0}", user.User.Username);
+            Console.WriteLine("User: {0}", user.User!.Username);
             Console.WriteLine("---------------------------------");
             if (user.SubmittedTime.Any())
             {
@@ -121,11 +115,11 @@ public class ProgramInteraction
         }
     }
 
-    public static void Print(List<ProjectData> projectDatas)
+    public static void Print(List<ProjectData> projectData)
     {
-        foreach (var project in projectDatas)
+        foreach (var project in projectData)
         {
-            Console.WriteLine("Project: {0}", project.Project.Name);
+            Console.WriteLine("Project: {0}", project.Project!.Name);
             Console.WriteLine("---------------------------------");
             if (project.EmployeesList.Any())
             {

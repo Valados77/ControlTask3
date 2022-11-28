@@ -1,18 +1,17 @@
-﻿
-namespace Mediator.Components
+﻿namespace Business.Mediator
 {
     public class BaseComponent
     {
-        protected IMediator _mediator;
+        protected IMediator Mediator;
 
-        public BaseComponent(IMediator mediator = null)
+        public BaseComponent(IMediator mediator = null!)
         {
-            _mediator = mediator;
+            Mediator = mediator;
         }
 
         public void SetMediator(IMediator mediator)
         {
-            _mediator = mediator;
+            Mediator = mediator;
         }
     }
 }

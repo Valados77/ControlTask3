@@ -1,15 +1,13 @@
-﻿using Business;
-using Business.BusinessObjects;
-using DataContracts;
+﻿using Business.BusinessObjects;
 
-namespace Mediator.Components
+namespace Business.Mediator
 {
     public class SubscribeTo : BaseComponent, IDisposable
     {
-        private readonly UserData _userData;
-        private readonly ProjectData _projectData;
+        private readonly UserData? _userData;
+        private readonly ProjectData? _projectData;
 
-        public SubscribeTo(UserData userData, ProjectData projectData)
+        public SubscribeTo(UserData? userData, ProjectData? projectData)
         {
             _userData = userData;
             _projectData = projectData;
@@ -19,8 +17,8 @@ namespace Mediator.Components
 
         public void Dispose()
         {
-            _userData.IsActiveChanged -= DisplayMessage;
-            _projectData.IsActiveChanged -= DisplayMessage;
+            _userData!.IsActiveChanged -= DisplayMessage;
+            _projectData!.IsActiveChanged -= DisplayMessage;
         }
 
         public string DisplayMessage(string msg)

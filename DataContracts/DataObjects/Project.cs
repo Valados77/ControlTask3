@@ -41,15 +41,5 @@
             MaxHours = maxHours;
             LeaderUserId = leaderUserId;
         }
-
-        public override void Print()
-        {
-            Console.WriteLine($"ID: {Id} \n" +
-                              $"Name: {Name} \n" +
-                              $"Expiration: {ExpirationDate} \n" +
-                              $"Max hours: {MaxHours} \n" +
-                              $"Leader userId {LeaderUserId} \n" +
-                              "Created \n");
-        }
     }
 }
