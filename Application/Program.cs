@@ -1,7 +1,7 @@
-﻿using Application;
-using Business.BusinesObjects;
+﻿
+namespace Application;
 
-class Program : ProgramInteraction
+internal class Program : ProgramInteraction
 {
     static void Main(string[] args)
     {
@@ -11,16 +11,20 @@ class Program : ProgramInteraction
         Console.WriteLine("Enter \"reg\" to register new user");
         while (Console.ReadLine() == "reg")
         {
-            ProgramInteraction.RegisterNewUser();
-            Console.WriteLine("end");   
+            RegisterNewUser();
+            Console.WriteLine("end");
             Console.WriteLine("Enter \"reg\" to register new user");
         }
 
-        //Print(DataFacadeInteraction.ReturnAllActiveUser());
+        Print(DataFacade.GetAllUser());
 
-        ProgramInteraction.Print(DataFacadeInteraction.ReturnAllLeader());
+        Console.WriteLine("Enter login name");
+        var loginName = Console.ReadLine();
+        Console.WriteLine("Enter login password");
+        var loginPassword = Console.ReadLine();
 
-        UserData? loginingUser = ProgramInteraction.LoginingUser();
+        var loginUser = UserBusinessObject.DoLoginUser(loginName, loginPassword);
+        Console.WriteLine(loginUser?.User!.Username);
         ////---------------------------------------
     }
 }

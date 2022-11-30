@@ -1,12 +1,27 @@
 ﻿using Business;
-using Business.BusinesObjects;
+using Business.BusinessObjects;
+using Business.Mediator;
 using DataContracts;
 
 namespace Application;
 
 public class ProgramInteraction
 {
-    public static DataFacade DataFacadeInteraction = new DataFacade();
+    public static UserData? _nowUserData;
+    public static ProjectData? _nowProjectData;
+
+
+    public static readonly DataFacade DataFacade = new DataFacade();
+    public static readonly SubscribeTo SubscribeTo = new SubscribeTo(_nowUserData, _nowProjectData);
+    public static readonly AdminBusinessObject AdminBusinessObject = new AdminBusinessObject();
+    public static readonly LeaderBusinessObject LeaderBusinessObject = new LeaderBusinessObject();
+    public static readonly UserBusinessObject UserBusinessObject = new UserBusinessObject();
+    public static ConcreteMediator ConcreteMediatorInteraction = new ConcreteMediator(
+        DataFacade,
+        SubscribeTo,
+        AdminBusinessObject,
+        LeaderBusinessObject,
+        UserBusinessObject);
 
     public static void Menu()
     {
@@ -26,7 +41,7 @@ public class ProgramInteraction
                     RegisterNewUser();
                     break;
                 case "2":
-                    //Program.LoginingUser = DataFacadeInteraction.LoginingUserData();
+                    //Program.LoginUser = DataFacadeInteraction.LoginingUserData();
                     break;
 
             }
@@ -34,18 +49,18 @@ public class ProgramInteraction
         //---------------------------------------
     }
 
-    public static bool RegisterNewUser()
+    public static string RegisterNewUser()
     {
         Console.Write("Enter username: ");
-        string userName = Console.ReadLine();
+        var userName = Console.ReadLine();
         Console.Write("Enter password: ");
-        string password = Console.ReadLine();
+        var password = Console.ReadLine();
 
         Console.Write("Enter access role:\n" +
                       "0. Admin\n" +
                       "1. Leader\n" +
                       "2. User");
-        Enums.AccessRoles role = new Enums.AccessRoles();
+        var role = new Enums.AccessRoles();
         switch (Console.ReadLine())
         {
             case "0":
@@ -67,51 +82,26 @@ public class ProgramInteraction
                 role = Enums.AccessRoles.User;
                 break;
         }
-        DataFacadeInteraction.AddNewUserData(userName, password, role);
-
-        return true;
+        return AdminBusinessObject.DoCreateUserData(userName, password, role);
     }
 
-    public static bool NewProjectData()
+    public static void NewProjectData()
     {
         Console.Write("Enter project name: ");
-        string projectName = Console.ReadLine();
-       
-        DataFacadeInteraction.AddNewProjectData(projectName);
+        var projectName = Console.ReadLine();
 
-        return true;
+        AdminBusinessObject.DoCreateProjectData(projectName);
     }
 
-    public static UserData? LoginingUser()
-    {
-        Console.WriteLine("Enter username: ");
-        string name = Console.ReadLine();
-        UserData userData = DataFacadeInteraction.ReturnUserData(name);
-
-        if (userData != null)
-        {
-            Console.WriteLine("Login completed");
-            Console.Write("Enter password: ");
-            string password = Console.ReadLine();
-            if (DataFacadeInteraction.PasswordVerification(userData, password) == true)
-            {
-                Console.WriteLine("Password completed");
-                return userData;
-            }
-        }
-        Console.WriteLine("Invalid username or password");
-        return null;
-    }
-
-    public static void Print(Dictionary<string, UserData> userData)
+    public static void Print(List<UserData> userData)
     {
         foreach (var user in userData)
         {
-            Console.WriteLine("User: {0}", user.Value.User.Username);
+            Console.WriteLine("User: {0}", user.User!.Username);
             Console.WriteLine("---------------------------------");
-            if (user.Value.SubmittedTime.Any())
+            if (user.SubmittedTime.Any())
             {
-                foreach (var timeTrackEntry in user.Value.SubmittedTime)
+                foreach (var timeTrackEntry in user.SubmittedTime)
                 {
                     Console.WriteLine(timeTrackEntry.Date);
                 }
@@ -125,15 +115,15 @@ public class ProgramInteraction
         }
     }
 
-    public static void Print(Dictionary<string, ProjectData> projectDatas)
+    public static void Print(List<ProjectData> projectData)
     {
-        foreach (var project in projectDatas)
+        foreach (var project in projectData)
         {
-            Console.WriteLine("Project: {0}", project.Value.Project.Name);
+            Console.WriteLine("Project: {0}", project.Project!.Name);
             Console.WriteLine("---------------------------------");
-            if (project.Value.EmployeesList.Any())
+            if (project.EmployeesList.Any())
             {
-                foreach (var employ in project.Value.EmployeesList)
+                foreach (var employ in project.EmployeesList)
                 {
                     Console.WriteLine(employ.Id);
                 }
@@ -147,5 +137,3 @@ public class ProgramInteraction
         }
     }
 }
-
-    

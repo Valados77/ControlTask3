@@ -1,16 +1,17 @@
 ﻿using DataContracts.DataObjects;
 
-namespace Business.BusinesObjects
+namespace Business.BusinessObjects
 {
     public class UserData
     {
-        public delegate string IsActiveChangedHandler(string msg);
-        public event IsActiveChangedHandler? IsActiveChanged;
-        public User User { get; private set; }
-        public List<TimeTrackEntry> SubmittedTime = new List<TimeTrackEntry>();
+        public delegate string IsActiveChangedHandlerUser(string msg);
+        public event IsActiveChangedHandlerUser? IsActiveChanged;
+
+        public User? User { get; private set; }
+        public List<TimeTrackEntry> SubmittedTime;
         public int SumOfSubmittedTime { get; private set; }
 
-        public UserData(User user, List<TimeTrackEntry>? submittedTime = null)
+        public UserData(User? user, List<TimeTrackEntry>? submittedTime = null)
         {
             User = user;
             SubmittedTime = submittedTime ?? new List<TimeTrackEntry>();
@@ -21,7 +22,7 @@ namespace Business.BusinesObjects
         {
             SubmittedTime?.Add(newTimeTrackEntry);
             SumOfSubmittedTime += newTimeTrackEntry.Value;
-            IsActiveChanged?.Invoke($"Add new TimeTrackEntry for the {User.Username}");
+            IsActiveChanged?.Invoke($"Add new TimeTrackEntry for the {User?.Username}");
         }
     }
 }

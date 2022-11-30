@@ -4,8 +4,8 @@
     {
         public static int Count = 1;
 
-        public DateTime ViewingDateTime { get; set; }
-        public DateTime CreationDateTime { get; set; }
+        public List<DateTime> ViewingDateTime { get; set; }
+        public DateTime SubmitDateTime { get; set; }
         public string Name { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int MaxHours { get; set; }
@@ -15,9 +15,11 @@
         public Project(string name)
             : this(name, DateTime.Now)
         {
-            Id = string.Format("{0:d4}P", Count++); //P-project
+            Id = $"{Count++:d4}P"; //P-project
             Name = name;
-            CreationDateTime = DateTime.Now;
+            SubmitDateTime = DateTime.Now;
+            ViewingDateTime = new List<DateTime>();
+            MaxHoursPerMonth = 0;
         }
 
         public Project(string name,
@@ -38,16 +40,6 @@
             ExpirationDate = expirationDate;
             MaxHours = maxHours;
             LeaderUserId = leaderUserId;
-        }
-
-        public override void Print()
-        {
-            Console.WriteLine($"ID: {Id} \n" +
-                              $"Name: {Name} \n" +
-                              $"Expiration: {ExpirationDate} \n" +
-                              $"Max hours: {MaxHours} \n" +
-                              $"Leader userId {LeaderUserId} \n" +
-                              "Created \n");
         }
     }
 }
