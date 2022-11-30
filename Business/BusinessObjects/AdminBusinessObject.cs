@@ -14,7 +14,7 @@ namespace Business.BusinessObjects
             {
                 return "error";
             }
-            return (string)Mediator.Notify(this,
+            return (string)Mediator.Notify(
                 Interactions.DoCreateUserData,
                 userName,
                 password,
@@ -27,35 +27,35 @@ namespace Business.BusinessObjects
             {
                 return "error";
             }
-            return (string)Mediator.Notify(this,
+            return (string)Mediator.Notify(
                 Interactions.DoCreateProjectData,
                 name)!;
         }
 
         public UserData DoReadUserDataById(string id)
         {
-            return (UserData)Mediator.Notify(this,
+            return (UserData)Mediator.Notify(
                  Interactions.DoReadUserDataById,
                  id)!;
         }
 
         public ProjectData DoReadProjectDataById(string id)
         {
-            return (ProjectData)Mediator.Notify(this,
+            return (ProjectData)Mediator.Notify(
                 Interactions.DoReadProjectDataById,
                 id)!;
         }
 
         public bool DoDeleteUserDataById(string id)
         {
-            return (bool)Mediator.Notify(this,
+            return (bool)Mediator.Notify(
                 Interactions.DoDeleteUserDataById,
                 id)!;
         }
 
         public bool DoDeleteProjectDataById(string id)
         {
-            return (bool)Mediator.Notify(this,
+            return (bool)Mediator.Notify(
                  Interactions.DoDeleteProjectDataById,
                  id)!;
         }
@@ -64,7 +64,7 @@ namespace Business.BusinessObjects
             string userName,
             string projectName)
         {
-            return (string)Mediator.Notify(this,
+            return (string)Mediator.Notify(
                 Interactions.DoAssignProjectForUser,
                 userName,
                 projectName)!;
@@ -74,7 +74,7 @@ namespace Business.BusinessObjects
             string userName,
             string projectName)
         {
-            return (string)Mediator.Notify(this,
+            return (string)Mediator.Notify(
                 Interactions.DoAssignProjectLeader,
                 userName,
                 projectName)!;

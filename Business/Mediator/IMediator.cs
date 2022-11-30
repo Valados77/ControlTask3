@@ -4,7 +4,7 @@ namespace Business.Mediator;
 
 public interface IMediator
 {
-    object? Notify(object sender,
+    object? Notify(
         Interactions interaction, 
         string? name = null, 
         string? password = null, 

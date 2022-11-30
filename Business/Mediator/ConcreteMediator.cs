@@ -22,7 +22,7 @@ public class ConcreteMediator : IMediator
         userBusinessObject.SetMediator(this);
     }
 
-    public object? Notify(object sender,
+    public object? Notify(
         Interactions interaction,
         string? name = null,
         string? password = null,

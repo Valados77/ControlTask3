@@ -6,14 +6,14 @@ namespace Business.BusinessObjects
     {
         public int DoGetMaxHoursPerMonth(string name)
         {
-            return (int)Mediator.Notify(this,
+            return (int)Mediator.Notify(
                 Interactions.DoGetMaxHoursPerMonth,
                 name)!;
         }
 
         public string DoSetMaxHoursPerMonth(string name, string hours)
         {
-            return (string)Mediator.Notify(this,
+            return (string)Mediator.Notify(
                 Interactions.DoSetMaxHoursPerMonth,
                 name, hours)!;
         }
