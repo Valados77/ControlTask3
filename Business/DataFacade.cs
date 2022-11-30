@@ -35,7 +35,7 @@ namespace Business
 
         public bool DeleteUserDataById(string? userId)
         {
-            if (userId == null)
+            if (string.IsNullOrEmpty(userId))
             {
                 return false;
             }
@@ -56,7 +56,7 @@ namespace Business
 
         public bool DeleteProjectDataById(string? projectId)
         {
-            if (projectId == null)
+            if (string.IsNullOrEmpty(projectId))
             {
                 return false;
             }

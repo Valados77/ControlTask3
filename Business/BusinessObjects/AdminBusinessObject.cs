@@ -10,7 +10,7 @@ namespace Business.BusinessObjects
             string? password,
             Enums.AccessRoles role)
         {
-            if (userName == null || password == null)
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
             {
                 return "error";
             }
@@ -23,7 +23,7 @@ namespace Business.BusinessObjects
 
         public string DoCreateProjectData(string? name)
         {
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
                 return "error";
             }
